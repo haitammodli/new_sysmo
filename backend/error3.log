@@ -1,0 +1,23 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by lombok.permit.Permit
+WARNING: Please consider reporting this to the maintainers of class lombok.permit.Permit
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[ERROR] COMPILATION ERROR : 
+[ERROR] /C:/new_sysmo/backend/src/main/java/com/example/backend/services/ExpeditionService.java:[52,41] cannot find symbol
+  symbol:   method findById(java.lang.Long)
+  location: variable agenceRepository of type com.example.backend.repositories.AgenceRepository
+[ERROR] /C:/new_sysmo/backend/src/main/java/com/example/backend/services/ExpeditionService.java:[55,108] incompatible types: java.lang.Long cannot be converted to java.lang.Integer
+[ERROR] /C:/new_sysmo/backend/src/main/java/com/example/backend/services/ExpeditionService.java:[56,102] incompatible types: java.lang.Long cannot be converted to java.lang.Integer
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.14.1:compile (default-compile) on project backend: Compilation failure: Compilation failure: 
+[ERROR] /C:/new_sysmo/backend/src/main/java/com/example/backend/services/ExpeditionService.java:[52,41] cannot find symbol
+[ERROR]   symbol:   method findById(java.lang.Long)
+[ERROR]   location: variable agenceRepository of type com.example.backend.repositories.AgenceRepository
+[ERROR] /C:/new_sysmo/backend/src/main/java/com/example/backend/services/ExpeditionService.java:[55,108] incompatible types: java.lang.Long cannot be converted to java.lang.Integer
+[ERROR] /C:/new_sysmo/backend/src/main/java/com/example/backend/services/ExpeditionService.java:[56,102] incompatible types: java.lang.Long cannot be converted to java.lang.Integer
+[ERROR] -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[ERROR] 
+[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
