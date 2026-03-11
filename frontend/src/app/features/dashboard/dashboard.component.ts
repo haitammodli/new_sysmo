@@ -1,35 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
 import { AuthService } from '../../core/services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
   userEmail: string = '';
   userInitials: string = '';
+  
+  authService = inject(AuthService);
 
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
-
     const userStr = localStorage.getItem('user');
     if (userStr) {
       try {
         const user = JSON.parse(userStr);
-        this.userEmail = user.email;
-        this.userInitials = this.userEmail ? this.userEmail.substring(0, 2).toUpperCase() : 'U';
+        this.userEmail = user.email || 'user@example.com';
+        this.userInitials = this.userEmail.substring(0, 2).toUpperCase();
       } catch (e) {
-        console.error('Failed to parse user data');
+        this.userEmail = 'user@example.com';
+        this.userInitials = 'US';
       }
     }
   }

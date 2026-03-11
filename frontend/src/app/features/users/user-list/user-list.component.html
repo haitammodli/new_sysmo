@@ -1,0 +1,132 @@
+<div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+
+  <!-- Page Header -->
+  <div class="sm:flex sm:items-center sm:justify-between mb-8">
+    <div class="sm:flex-auto">
+      <h1 class="text-2xl font-bold text-gray-900 border-l-4 pl-3" style="border-color: #009045;">Gestion des Utilisateurs</h1>
+      <p class="mt-2 text-sm text-gray-700">Gérez les comptes utilisateurs, leurs rôles et accédez à la liste noire.</p>
+    </div>
+  </div>
+
+  <!-- Search and Filter Bar -->
+  <div class="bg-white p-4 shadow-sm rounded-lg mb-8 border border-gray-200">
+    <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0 md:space-x-4">
+      
+      <!-- Search Input -->
+      <div class="relative w-full md:w-96">
+        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <svg class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+        <input 
+          type="text" 
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange($event)"
+          placeholder="Rechercher par nom, prénom ou email..." 
+          class="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:border-transparent sm:text-sm"
+        >
+      </div>
+
+      <!-- Filters -->
+      <div class="flex flex-wrap items-center gap-2">
+        <select 
+          [ngModel]="selectedRole" 
+          (ngModelChange)="setRoleFilter($event)"
+          class="block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-green-500 focus:border-green-500 sm:text-sm rounded-md"
+        >
+          <option *ngFor="let role of roles" [value]="role">{{role === 'ALL' ? 'Tous les rôles' : role}}</option>
+        </select>
+
+        <button 
+          (click)="toggleBlacklisted()"
+          [ngClass]="{'bg-red-100 text-red-800 border-red-300': showBlacklisted, 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50': !showBlacklisted}"
+          class="inline-flex items-center px-4 py-2 border rounded-md shadow-sm text-sm font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 transition-colors duration-200"
+        >
+          <svg *ngIf="showBlacklisted" class="-ml-1 mr-2 h-5 w-5 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
+          </svg>
+          <svg *ngIf="!showBlacklisted" class="-ml-1 mr-2 h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.618 5.984A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016zM12 9v2m0 4h.01" />
+          </svg>
+          {{ showBlacklisted ? 'Voir tous' : 'Liste Noire' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="bg-white shadow-sm ring-1 ring-gray-200 rounded-lg overflow-hidden">
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">Code</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Utilisateur</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Email</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Rôle</th>
+          <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Détails Client</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-200 bg-white">
+        <!-- Empty State -->
+        <tr *ngIf="filteredUsers.length === 0">
+          <td colspan="5" class="px-6 py-10 text-center text-gray-500">
+            Aucun utilisateur trouvé.
+          </td>
+        </tr>
+
+        <!-- User Rows -->
+        <tr *ngFor="let user of filteredUsers" class="hover:bg-gray-50 transition-colors duration-150 relative">
+          
+          <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+            #{{ user.code }}
+          </td>
+          
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-900">
+            <div class="font-medium">{{ user.nom }} {{ user.prenom }}</div>
+            <div *ngIf="user.listeNoire" class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-red-100 text-red-800 mt-1">
+              Liste Noire
+            </div>
+          </td>
+          
+          <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+            {{ user.email }}
+          </td>
+          
+          <td class="whitespace-nowrap px-3 py-4 text-sm">
+            <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium" 
+                  [ngClass]="{
+                    'bg-green-100 text-green-800': user.role === 'ADMIN',
+                    'bg-blue-100 text-blue-800': user.role === 'CLIENT',
+                    'bg-purple-100 text-purple-800': user.role === 'CHEFAGENCE',
+                    'bg-gray-100 text-gray-800': user.role !== 'ADMIN' && user.role !== 'CLIENT' && user.role !== 'CHEFAGENCE'
+                  }">
+              {{ user.role }}
+            </span>
+          </td>
+          
+          <td class="px-3 py-4 text-sm text-gray-500">
+            <div *ngIf="user.role === 'CLIENT'" class="flex flex-col space-y-1">
+              <span *ngIf="user.secteur" class="flex items-center text-xs">
+                <svg class="h-4 w-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+                {{ user.secteur }}
+              </span>
+              <span *ngIf="user.telephone" class="flex items-center text-xs">
+                <svg class="h-4 w-4 mr-1 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+                {{ user.telephone }}
+              </span>
+            </div>
+            <div *ngIf="user.role !== 'CLIENT'" class="text-xs text-gray-400 italic">
+              N/A
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
