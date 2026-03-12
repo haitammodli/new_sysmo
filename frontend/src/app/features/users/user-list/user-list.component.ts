@@ -25,14 +25,32 @@ export class UserListComponent implements OnInit, OnDestroy {
   
   roles: string[] = ['ALL', 'ADMIN', 'CLIENT', 'CHEFAGENCE', 'AGENTMODIFICATION', 'RESPONSABLEMODIFICATION'];
 
+  // --- MODAL STATE (ADD & EDIT) ---
+  showAddModal: boolean = false;
+  isEditMode: boolean = false;
+  editingUserId: number | null = null;
+  
+  newUser: any = {
+    userType: 'ADMIN',
+    nom: '',
+    prenom: '',
+    email: '',
+    password: '',
+    adresse: '',
+    telephone: '',
+    secteur: '',
+    contact: '',
+    typeClient: 'ENTREPRISE',
+    agenceId: null
+  };
+
   private subscriptions: Subscription = new Subscription();
 
-  constructor(private userService: UserService) {}
+  constructor(public userService: UserService) {}
 
   ngOnInit(): void {
     this.loadAllUsers();
 
-    // Setup search with debounce
     this.subscriptions.add(
       this.searchSubject.pipe(
         debounceTime(300),
@@ -51,16 +69,117 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
+  // ==========================================
+  // MODAL & CRUD METHODS (ADD, EDIT, DELETE)
+  // ==========================================
+
+  openAddModal(): void {
+    this.isEditMode = false;
+    this.editingUserId = null;
+    this.newUser = {
+      userType: 'ADMIN',
+      nom: '',
+      prenom: '',
+      email: '',
+      password: '',
+      adresse: '',
+      telephone: '',
+      secteur: '',
+      contact: '',
+      typeClient: 'ENTREPRISE',
+      agenceId: null
+    };
+    this.showAddModal = true;
+  }
+
+  onEdit(user: User): void {
+    this.isEditMode = true;
+    this.editingUserId = user.code || null;
+    
+    // Map backend roles to frontend dropdown values
+    let mappedUserType = user.role;
+    if (user.role === 'AGENTMODIFICATION') mappedUserType = 'AGENT_MODIF';
+    if (user.role === 'RESPONSABLEMODIFICATION') mappedUserType = 'RESP_MODIF';
+    if (user.role === 'CHEFAGENCE') mappedUserType = 'CHEF_AGENCE';
+
+    // Pre-fill the form with the user's current data
+    this.newUser = {
+      userType: mappedUserType || 'ADMIN',
+      nom: user.nom,
+      prenom: user.prenom,
+      email: user.email,
+      password: '', // Leave password blank on edit unless they want to change it
+      adresse: (user as any).adresse || '',
+      telephone: (user as any).telephone || '',
+      secteur: (user as any).secteur || '',
+      contact: (user as any).contact || '',
+      typeClient: (user as any).typeClient || 'ENTREPRISE',
+      agenceId: (user as any).agenceId || null
+    };
+    
+    this.showAddModal = true;
+  }
+
+  onDelete(user: User): void {
+    const confirmDelete = confirm(`Voulez-vous vraiment supprimer l'utilisateur ${user.nom} ${user.prenom} ?`);
+    
+    if (confirmDelete && user.code) {
+      this.userService.deleteUser(user.code).subscribe({
+        next: () => {
+          console.log('Utilisateur supprimé avec succès');
+          this.loadAllUsers(); // Auto-refresh the list!
+        },
+        error: (err) => {
+          console.error('Erreur lors de la suppression', err);
+          alert('Erreur lors de la suppression. Cet utilisateur est peut-être lié à d\'autres données.');
+        }
+      });
+    }
+  }
+
+  closeAddModal(): void {
+    this.showAddModal = false;
+  }
+
+  submitNewUser(): void {
+    if (this.isEditMode && this.editingUserId) {
+      // UPDATE EXISTING USER
+      this.userService.updateUser(this.editingUserId, this.newUser).subscribe({
+        next: (response: any) => {
+          console.log('Utilisateur modifié avec succès:', response);
+          this.closeAddModal();
+          this.loadAllUsers();
+        },
+        error: (err: any) => {
+          console.error('Erreur lors de la modification', err);
+          alert('Erreur lors de la modification de l\'utilisateur.');
+        }
+      });
+    } else {
+      // CREATE NEW USER
+      this.userService.createUser(this.newUser).subscribe({
+        next: (response: any) => {
+          console.log('Utilisateur créé avec succès:', response);
+          this.closeAddModal();
+          this.loadAllUsers(); 
+        },
+        error: (err: any) => {
+          console.error('Erreur lors de la création de l\'utilisateur', err);
+          alert('Erreur: Vérifiez les informations saisies ou si l\'email existe déjà.');
+        }
+      });
+    }
+  }
+
+  // ==========================================
+  // EXISTING SEARCH & FILTER METHODS
+  // ==========================================
+
   onSearchChange(term: string): void {
     this.searchSubject.next(term);
   }
 
   loadAllUsers(): void {
-    // There isn't an explicit getAllUsers. 
-    // Usually searching for '' doesn't work well on backends if not handled.
-    // So we assume the typical fetching will be by role or search.
-    // For now, let's try getting all users via an empty search if the backend supports it, 
-    // or just load admins or clients initially.
     this.userService.searchUsers('').subscribe({
       next: (data: User[]) => {
         this.users = data;
@@ -69,7 +188,6 @@ export class UserListComponent implements OnInit, OnDestroy {
       },
       error: (err: any) => {
         console.error('Failed to load users', err);
-        // Fallback or handle error
       }
     });
   }
@@ -102,7 +220,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   toggleBlacklisted(): void {
     this.showBlacklisted = !this.showBlacklisted;
     if (this.showBlacklisted) {
-      this.selectedRole = 'CLIENT'; // Blacklisted makes sense mostly for clients
+      this.selectedRole = 'CLIENT'; 
       this.userService.getBlacklistedClients().subscribe({
          next: (data: User[]) => {
            this.users = data;
@@ -118,13 +236,10 @@ export class UserListComponent implements OnInit, OnDestroy {
   applyFilters(): void {
     let result = this.users;
     
-    // The role filter is done mostly on the backend now, but re-filtering frontend just in case of empty search that returned all
     if (this.selectedRole !== 'ALL' && !this.showBlacklisted) {
       result = result.filter(u => u.role === this.selectedRole);
     }
     
-    // We already handle showBlacklisted with backend call specifically
-    // So we assign the result
     this.filteredUsers = result;
   }
 }

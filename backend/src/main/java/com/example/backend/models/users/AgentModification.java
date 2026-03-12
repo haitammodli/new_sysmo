@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-@DiscriminatorValue("AGENTMODIFICATION")
+@DiscriminatorValue("AGENT_MOD")
 public class AgentModification extends User {
 
 }

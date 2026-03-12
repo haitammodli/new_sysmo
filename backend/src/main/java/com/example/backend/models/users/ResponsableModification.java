@@ -8,7 +8,7 @@ import lombok.*;
 @Entity
 @Getter
 @Setter @NoArgsConstructor
-@DiscriminatorValue("RESPONSABLEMODIFICATION")
+@DiscriminatorValue("RESP_MOD")
 public class ResponsableModification extends User {
 
 }
