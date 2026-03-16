@@ -106,7 +106,12 @@
                     'bg-purple-100 text-purple-800': user.role === 'CHEFAGENCE',
                     'bg-pink-100 text-pink-800': user.role === 'AGENTMODIFICATION',
                     'bg-yellow-100 text-yellow-800': user.role === 'RESPONSABLEMODIFICATION',
-                    'bg-gray-100 text-gray-800': user.role !== 'ADMIN' && user.role !== 'CLIENT' && user.role !== 'CHEFAGENCE' && user.role !== 'AGENTMODIFICATION' && user.role !== 'RESPONSABLEMODIFICATION'
+                    'bg-indigo-100 text-indigo-800': user.role === 'EXPEDITEUR',
+                    'bg-green-100 text-orange-800': user.role === 'DESTINATAIRE',
+
+
+                    'bg-gray-100 text-gray-800': user.role !== 'ADMIN' && user.role !== 'CLIENT' && user.role !== 'CHEFAGENCE' 
+                    && user.role !== 'AGENTMODIFICATION' && user.role !== 'RESPONSABLEMODIFICATION' && user.role !== 'EXPEDITEUR' && user.role !== 'DESTINATAIRE'
                   }">
               {{ user.role }}
             </span>
@@ -184,6 +189,8 @@
                 <option value="AGENT_MODIF">Agent de Modification</option>
                 <option value="RESP_MODIF">Responsable Modification</option>
                 <option value="CHEF_AGENCE">Chef d'Agence</option>
+                <option value="EXPEDITEUR">expediteur</option>
+                <option value="DESTINATAIRE">destinataire</option>
               </select>
             </div>
 

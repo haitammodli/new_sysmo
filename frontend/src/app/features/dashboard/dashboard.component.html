@@ -21,20 +21,30 @@
           </a>
         </li>
         <li>
-          <a href="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-gray-100 rounded-lg font-medium transition-colors">
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17l6-6-6-6"></path></svg>
             <span>Expeditions</span>
           </a>
         </li>
         <li>
-          <a href="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-gray-100 rounded-lg font-medium transition-colors">
+          <a href="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17l6-6-6-6"></path></svg>
             <span>Taxation</span>
           </a>
         </li>
-        @if (authService.hasRole(['ADMIN', 'RESPONSABLE_MODIFICATION'])) {
+        @if (authService.hasRole(['ADMIN', 'RESPONSABLEMODIFICATION', 'AGENTMODIFICATION'])) {
+         <li>
+            <a routerLink="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+              </svg>
+              <span>Ajouter Expedition</span>
+            </a>
+          </li>
+        }
+        @if (authService.hasRole(['ADMIN', 'RESPONSABLEMODIFICATION'])) {
           <li>
-            <a routerLink="/dashboard/users" class="flex items-center space-x-3 px-4 py-3 text-green-700 bg-green-50 hover:bg-green-100 rounded-lg font-medium transition-colors border-l-4 border-green-500">
+            <a routerLink="/dashboard/users" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
               </svg>
@@ -76,7 +86,8 @@
         <!-- Total Shipments -->
         <div class="bg-surface rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div class="flex items-center justify-between mb-4">
-            <h3 class="text-gray-500 font-medium tracking-wide text-sm">Total Shipments</h3>
+            <h3 class="text-gray-500 font-med
+            ium tracking-wide text-sm">Total Shipments</h3>
             <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
               <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
             </div>

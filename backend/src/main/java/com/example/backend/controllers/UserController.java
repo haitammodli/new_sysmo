@@ -20,8 +20,12 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private com.example.backend.services.UserService userService;
+
+    // Fixed: Added ("id")
     @GetMapping("/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable("id") Long id) {
         Optional<User> userOpt = userRepository.findById(id);
         if (userOpt.isPresent()) {
             return ResponseEntity.ok(userService.mapToDTO(userOpt.get()));
@@ -29,8 +33,9 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    // Fixed: Added ("email")
     @GetMapping("/email/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable String email) {
+    public ResponseEntity<?> getUserByEmail(@PathVariable("email") String email) {
         Optional<User> userOpt = userRepository.findByEmail(email);
         if (userOpt.isPresent()) {
             return ResponseEntity.ok(userService.mapToDTO(userOpt.get()));
@@ -38,8 +43,9 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
+    // Fixed: Added ("role")
     @GetMapping("/role/{role}")
-    public ResponseEntity<?> getUsersByRole(@PathVariable String role) {
+    public ResponseEntity<?> getUsersByRole(@PathVariable("role") String role) {
         try {
             Roles roleEnum = Roles.valueOf(role.toUpperCase());
             List<User> users = userRepository.findByRole(roleEnum);
@@ -52,16 +58,15 @@ public class UserController {
         }
     }
 
-    @Autowired
-    private com.example.backend.services.UserService userService;
-
+    // Fixed: Added ("keyword")
     @GetMapping("/search")
-    public ResponseEntity<?> searchUsers(@RequestParam String keyword) {
+    public ResponseEntity<?> searchUsers(@RequestParam("keyword") String keyword) {
         return ResponseEntity.ok(userService.searchUsers(keyword));
     }
 
+    // Fixed: Added ("agenceId")
     @GetMapping("/agence/{agenceId}")
-    public ResponseEntity<?> getUsersByAgence(@PathVariable Long agenceId) {
+    public ResponseEntity<?> getUsersByAgence(@PathVariable("agenceId") Long agenceId) {
         List<User> users = userRepository.findByAgenceId(agenceId);
         List<UserResponseDTO> responseDTOs = users.stream()
                 .map(userService::mapToDTO)
@@ -78,18 +83,20 @@ public class UserController {
         return ResponseEntity.ok(responseDTOs);
     }
 
+    // Fixed: Added ("id")
     @DeleteMapping("/{id}")
     @org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN', 'RESPONSABLE_MODIFICATION')")
-    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+    public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
         if (userService.deleteUser(id)) {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
     }
 
+    // Fixed: Added ("id")
     @PutMapping("/{id}")
     @org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN', 'RESPONSABLE_MODIFICATION')")
-    public ResponseEntity<?> updateUser(@PathVariable Long id, @RequestBody java.util.Map<String, Object> updates) {
+    public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody java.util.Map<String, Object> updates) {
         Optional<UserResponseDTO> updatedUser = userService.updateUser(id, updates);
         if (updatedUser.isPresent()) {
             return ResponseEntity.ok(updatedUser.get());

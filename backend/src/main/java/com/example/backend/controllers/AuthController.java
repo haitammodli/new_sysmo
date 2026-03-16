@@ -82,6 +82,14 @@ public class AuthController {
                 user = new ChefAgence();
                 user.setRole(Roles.CHEFAGENCE);
                 break;
+            case "EXPEDITEUR":
+                user = new Expediteur();
+                user.setRole(Roles.EXPEDITEUR);
+                break;
+            case "DESTINATAIRE":
+                user = new Destinataire();
+                user.setRole(Roles.DESTINATAIRE);
+                break;
             case "CLIENT":
                 Client client = new Client();
                 client.setClient(registerRequest.getClient());
