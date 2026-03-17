@@ -1,0 +1,119 @@
+<div *ngIf="loading" class="flex justify-center items-center h-64">
+  <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+</div>
+
+<div *ngIf="!loading && expedition" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  <div class="mb-6 flex items-center justify-between">
+    <div>
+      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Expédition #{{expedition.numeroexpedition}}</h1>
+      <p class="mt-1 text-sm text-gray-500">Créée le {{expedition.dateCreation | date:'long'}}</p>
+    </div>
+    <div class="flex items-center space-x-4">
+      <span class="inline-flex items-center rounded-md px-3 py-1 text-sm font-medium ring-1 ring-inset shadow-sm" [ngClass]="getBadgeClass(expedition.statut)">
+        {{expedition.statut}}
+      </span>
+      <button routerLink="/dashboard/expeditions" class="rounded bg-white px-2 py-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Retour</button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3">
+    <!-- Participants -->
+    <div class="bg-white shadow-sm ring-1 ring-gray-200 sm:rounded-xl">
+      <div class="px-4 py-5 sm:p-6">
+        <h3 class="text-base font-semibold leading-6 text-gray-900 border-b pb-2 mb-4">Participants</h3>
+        <dl class="divide-y divide-gray-100 text-sm">
+          <div class="py-3 flex justify-between gap-4">
+            <dt class="font-medium text-gray-900">Expéditeur</dt>
+            <dd class="text-gray-700 text-right">{{expedition.expiditeurNom}} <span class="text-xs text-gray-400">({{expedition.expiditeurId}})</span></dd>
+          </div>
+          <div class="py-3 flex justify-between gap-4">
+            <dt class="font-medium text-gray-900">Destinataire</dt>
+            <dd class="text-gray-700 text-right">{{expedition.distinataireNom}} <span class="text-xs text-gray-400">({{expedition.distinataireId}})</span></dd>
+          </div>
+          <div class="py-3 flex justify-between gap-4">
+            <dt class="font-medium text-gray-900">Agence</dt>
+            <dd class="text-gray-700 text-right">{{expedition.agenceNom}} <span class="text-xs text-gray-400">({{expedition.agenceId}})</span></dd>
+          </div>
+          <div *ngIf="expedition.ramasseurId" class="py-3 flex justify-between gap-4">
+            <dt class="font-medium text-gray-900">Ramasseur</dt>
+            <dd class="text-gray-700 text-right">{{expedition.ramasseurNom}} <span class="text-xs text-gray-400">({{expedition.ramasseurId}})</span></dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Logistics -->
+    <div class="bg-white shadow-sm ring-1 ring-gray-200 sm:rounded-xl">
+      <div class="px-4 py-5 sm:p-6">
+        <h3 class="text-base font-semibold leading-6 text-gray-900 border-b pb-2 mb-4">Logistique & Options</h3>
+        <dl class="grid grid-cols-2 gap-x-4 gap-y-4 text-sm">
+          <div><dt class="font-medium text-gray-500">Nature</dt><dd class="text-gray-900 mt-1">{{expedition.natureId || '-'}}</dd></div>
+          <div><dt class="font-medium text-gray-500">Type</dt><dd class="text-gray-900 mt-1">{{expedition.typeId || '-'}}</dd></div>
+          <div><dt class="font-medium text-gray-500">Mode Régl.</dt><dd class="text-gray-900 mt-1">{{expedition.modeReglId || '-'}}</dd></div>
+          <div><dt class="font-medium text-gray-500">Port</dt><dd class="text-gray-900 mt-1">{{expedition.portId || '-'}}</dd></div>
+          <div><dt class="font-medium text-gray-500">Cat Prod</dt><dd class="text-gray-900 mt-1">{{expedition.catprodId || '-'}}</dd></div>
+          <div><dt class="font-medium text-gray-500">Credit</dt><dd class="text-gray-900 mt-1">{{expedition.creditId || '-'}}</dd></div>
+          <div><dt class="font-medium text-gray-500">Unité</dt><dd class="text-gray-900 mt-1">{{expedition.unitId || '-'}}</dd></div>
+          <div><dt class="font-medium text-gray-500">Livraison</dt><dd class="text-gray-900 mt-1">{{expedition.livraisonId || '-'}}</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <!-- Financials & Documents -->
+    <div class="bg-indigo-50 shadow-sm ring-1 ring-indigo-200 sm:rounded-xl">
+      <div class="px-4 py-5 sm:p-6 text-black">
+        <h3 class="text-base font-semibold leading-6 text-indigo-900 border-b border-indigo-200 pb-2 mb-4">Financement et Facturation</h3>
+        <dl class="divide-y divide-indigo-100 text-sm">
+          <div class="py-2 flex justify-between gap-4"><dt class="text-indigo-800">Montant HT</dt><dd class="font-semibold">{{expedition.ht | number:'1.2-2'}}</dd></div>
+          <div class="py-2 flex justify-between gap-4"><dt class="text-indigo-800">TVA (%)</dt><dd class="font-semibold">{{expedition.tva}}</dd></div>
+          <div class="py-3 flex justify-between gap-4 bg-white rounded shadow-sm px-3 mt-2 border border-indigo-100"><dt class="font-bold text-gray-900">Total TTC</dt><dd class="font-black text-indigo-600 text-lg">{{expedition.ttc | number:'1.2-2'}} MAD</dd></div>
+        </dl>
+        <div class="mt-6">
+          <h4 class="text-sm font-semibold text-indigo-900 mb-2">Documents</h4>
+          <div class="flex flex-col space-y-2">
+            <div class="flex items-center text-sm">
+              <span class="w-4 h-4 rounded-full mr-2 flex items-center justify-center" [ngClass]="expedition.bl ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'">
+                <svg *ngIf="expedition.bl" class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                <span *ngIf="!expedition.bl" class="w-2 h-2 rounded-full bg-gray-300"></span>
+              </span>
+              Bon de Livraison <span *ngIf="expedition.bl" class="ml-1 text-gray-500">({{expedition.numerobl}})</span>
+            </div>
+            <div class="flex items-center text-sm">
+              <span class="w-4 h-4 rounded-full mr-2 flex items-center justify-center" [ngClass]="expedition.facture ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'">
+                <svg *ngIf="expedition.facture" class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                <span *ngIf="!expedition.facture" class="w-2 h-2 rounded-full bg-gray-300"></span>
+              </span>
+              Facture <span *ngIf="expedition.facture" class="ml-1 text-gray-500">({{expedition.numerofacture}})</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dimensions Information (Col span 3) -->
+    <div class="bg-white shadow-sm ring-1 ring-gray-200 sm:rounded-xl lg:col-span-3 text-black">
+      <div class="px-4 py-5 sm:p-6 border-b border-gray-100">
+        <h3 class="text-base font-semibold leading-6 text-gray-900 border-b pb-2 mb-4">Détails de Taxation</h3>
+        <dl class="grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4 lg:grid-cols-6 text-sm text-center">
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Colis</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.colis || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Poids (kg)</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.poid || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Volume (m³)</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.volume || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Étiquettes</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.etiquette || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Encombrement</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.encombrement || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Valeur Déclarée</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.valeurDeclaree | number:'1.2-2'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Fond</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.fond | number:'1.2-2'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">PS</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.ps | number:'1.2-2'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group col-span-2 sm:col-span-4 lg:col-span-4 text-left"><dt class="font-medium text-gray-500 text-center sm:text-left">Commentaire</dt><dd class="mt-1 text-base text-gray-900">{{expedition.comment || 'Aucun commentaire'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loading && !expedition" class="text-center py-12">
+  <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+  </svg>
+  <h3 class="mt-2 text-sm font-semibold text-gray-900">Expédition introuvable</h3>
+  <p class="mt-1 text-sm text-gray-500">Nous n'avons pas pu trouver les détails de cette expédition.</p>
+</div>

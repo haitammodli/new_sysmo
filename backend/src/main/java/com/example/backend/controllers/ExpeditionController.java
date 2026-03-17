@@ -28,4 +28,10 @@ public class ExpeditionController {
         List<ExpeditionResponseDTO> response = expeditionService.getAllExpeditions();
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ExpeditionResponseDTO> getExpeditionById(@PathVariable Long id) {
+        ExpeditionResponseDTO response = expeditionService.getExpeditionById(id);
+        return ResponseEntity.ok(response);
+    }
 }

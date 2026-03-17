@@ -1,64 +1,88 @@
 <div class="flex h-screen w-full bg-background overflow-hidden">
-  
+
   <!-- Sidebar -->
   <aside class="w-64 bg-surface border-r border-border flex flex-col hidden md:flex">
-   <div class="h-20 flex items-center px-6 border-b border-border bg-gray-50/50">
-    <div class="flex items-center space-x-3">
-      <img src="assets/logo1.svg" alt="SDTM Logo" class="h-10 w-auto">
-      <div class="flex flex-col">
-        <span class="text-sm font-bold text-primary leading-tight tracking-tight">SDTM</span>
-        <span class="text-[10px] font-medium text-gray-500 uppercase tracking-widest">Logistics</span>
+    <div class="h-20 flex items-center px-6 border-b border-border bg-gray-50/50">
+      <div class="flex items-center space-x-3">
+        <img src="assets/logo1.svg" alt="SDTM Logo" class="h-10 w-auto">
+        <div class="flex flex-col">
+          <span class="text-sm font-bold text-primary leading-tight tracking-tight">SDTM</span>
+          <span class="text-[10px] font-medium text-gray-500 uppercase tracking-widest">Logistics</span>
+        </div>
       </div>
     </div>
-  </div>
-    
+
     <nav class="flex-1 overflow-y-auto py-4">
       <ul class="space-y-2 px-4">
         <li>
-          <a href="#" class="flex items-center space-x-3 px-4 py-3 bg-primary bg-opacity-10 text-primary rounded-lg font-medium transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+          <a href="#"
+            class="flex items-center space-x-3 px-4 py-3 bg-primary bg-opacity-10 text-primary rounded-lg font-medium transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z">
+              </path>
+            </svg>
             <span>Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17l6-6-6-6"></path></svg>
+          <a routerLink="/dashboard/expeditions" routerLinkActive="bg-green-100 text-green-800"
+            class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17l6-6-6-6"></path>
+            </svg>
             <span>Expeditions</span>
           </a>
         </li>
         <li>
-          <a href="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17l6-6-6-6"></path></svg>
+          <a href="#"
+            class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17l6-6-6-6"></path>
+            </svg>
             <span>Taxation</span>
           </a>
         </li>
         @if (authService.hasRole(['ADMIN', 'RESPONSABLEMODIFICATION', 'AGENTMODIFICATION'])) {
-         <li>
-            <a routerLink="#" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-              </svg>
-              <span>Ajouter Expedition</span>
-            </a>
-          </li>
+        <li>
+          <a routerLink="/dashboard/expeditions/add" routerLinkActive="bg-green-100 text-green-800"
+            class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+            </svg>
+            <span>Ajouter Expedition</span>
+          </a>
+        </li>
         }
         @if (authService.hasRole(['ADMIN', 'RESPONSABLEMODIFICATION'])) {
-          <li>
-            <a routerLink="/dashboard/users" class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-              </svg>
-              <span>Gestion Utilisateurs</span>
-            </a>
-          </li>
+        <li>
+          <a routerLink="/dashboard/users"
+            class="flex items-center space-x-3 px-4 py-3 text-text hover:bg-green-100 rounded-lg font-medium transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+              </path>
+            </svg>
+            <span>Gestion Utilisateurs</span>
+          </a>
+        </li>
         }
 
       </ul>
     </nav>
 
     <div class="p-4 border-t border-border">
-      <button (click)="logout()" class="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors font-medium">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+      <button (click)="logout()"
+        class="w-full flex items-center justify-center space-x-2 px-4 py-2 bg-red-50 text-red-600 hover:bg-red-100 rounded-lg transition-colors font-medium">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+        </svg>
         <span>Logout</span>
       </button>
     </div>
@@ -79,22 +103,29 @@
 
     <!-- Scrollable Content -->
     <div class="flex-1 overflow-y-auto p-6">
-      
+
       <!-- Metric Cards -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        
+
         <!-- Total Shipments -->
         <div class="bg-surface rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-gray-500 font-med
             ium tracking-wide text-sm">Total Shipments</h3>
             <div class="p-2 bg-blue-50 text-blue-600 rounded-lg">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+              </svg>
             </div>
           </div>
           <div class="text-3xl font-bold text-text">1,284</div>
           <p class="text-sm text-green-600 mt-2 flex items-center">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18">
+              </path>
+            </svg>
             <span>+12.5% from last week</span>
           </p>
         </div>
@@ -104,7 +135,11 @@
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-gray-500 font-medium tracking-wide text-sm">Pending Modifications</h3>
             <div class="p-2 bg-yellow-50 text-yellow-600 rounded-lg">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
             </div>
           </div>
           <div class="text-3xl font-bold text-text">42</div>
@@ -116,12 +151,20 @@
           <div class="flex items-center justify-between mb-4">
             <h3 class="text-gray-500 font-medium tracking-wide text-sm">Flagged Issues</h3>
             <div class="p-2 bg-red-50 text-red-600 rounded-lg">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z">
+                </path>
+              </svg>
             </div>
           </div>
           <div class="text-3xl font-bold text-text">7</div>
           <p class="text-sm text-red-600 mt-2 flex items-center">
-            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18">
+              </path>
+            </svg>
             <span>+2 from yesterday</span>
           </p>
         </div>
@@ -134,7 +177,11 @@
           <h3 class="font-semibold text-lg text-text">Recent Shipments</h3>
         </div>
         <div class="p-8 text-center text-gray-500">
-          <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          <svg class="w-12 h-12 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+            </path>
+          </svg>
           <p>Shipment data table will be rendered here...</p>
         </div>
       </div>

@@ -42,27 +42,52 @@ public class ExpeditionService {
     @Transactional
     public ExpeditionResponseDTO creerExpedition(ExpeditionRequestDTO dto) {
         
-        // 1. Fetch Relationships
-        User expiditeur = userRepository.findById(dto.getExpiditeurId())
-                .orElseThrow(() -> new RuntimeException("Expéditeur non trouvé avec ID: " + dto.getExpiditeurId()));
-                
-        User destinataire = userRepository.findById(dto.getDistinataireId())
-                .orElseThrow(() -> new RuntimeException("Destinataire non trouvé avec ID: " + dto.getDistinataireId()));
-                
-        Agence agence = agenceRepository.findById(dto.getAgenceId())
-                .orElseThrow(() -> new RuntimeException("Agence non trouvée avec ID: " + dto.getAgenceId()));
+        // 1. Fetch Relationships optimally
+        User expiditeur = dto.getExpiditeurId() != null ? userRepository.getReferenceById(dto.getExpiditeurId()) : null;
+        User destinataire = dto.getDistinataireId() != null ? userRepository.getReferenceById(dto.getDistinataireId()) : null;
+        Agence agence = dto.getAgenceId() != null ? agenceRepository.getReferenceById(dto.getAgenceId()) : null;
 
         ReferenceData nature = dto.getNatureId() != null ? referenceDataRepository.findById(dto.getNatureId()).orElse(null) : null;
         ReferenceData type = dto.getTypeId() != null ? referenceDataRepository.findById(dto.getTypeId()).orElse(null) : null;
+        ReferenceData modeRegl = dto.getModeReglId() != null ? referenceDataRepository.findById(dto.getModeReglId()).orElse(null) : null;
+        ReferenceData port = dto.getPortId() != null ? referenceDataRepository.findById(dto.getPortId()).orElse(null) : null;
+        ReferenceData catprod = dto.getCatprodId() != null ? referenceDataRepository.findById(dto.getCatprodId()).orElse(null) : null;
+        ReferenceData credit = dto.getCreditId() != null ? referenceDataRepository.findById(dto.getCreditId()).orElse(null) : null;
+        ReferenceData unit = dto.getUnitId() != null ? referenceDataRepository.findById(dto.getUnitId()).orElse(null) : null;
+        ReferenceData livraison = dto.getLivraisonId() != null ? referenceDataRepository.findById(dto.getLivraisonId()).orElse(null) : null;
+        ReferenceData taxationRef = dto.getTaxationId() != null ? referenceDataRepository.findById(dto.getTaxationId()).orElse(null) : null;
 
         // 2. Create and Save ElementTaxation
         ElementTaxation taxation = new ElementTaxation();
+        taxation.setColis(dto.getColis());
         taxation.setPoid(dto.getPoid());
         taxation.setVolume(dto.getVolume());
+        taxation.setEtiquette(dto.getEtiquette());
+        taxation.setEncombrement(dto.getEncombrement());
+        taxation.setValeurDeclaree(dto.getValeurDeclaree());
+        taxation.setFond(dto.getFond());
         taxation.setHt(dto.getHt());
         taxation.setTva(dto.getTva());
-        taxation.setTtc(dto.getHt() + dto.getTva()); // ttc = ht + tva
         
+        // Calculate TTC
+        taxation.setTtc(dto.getHt() + (dto.getHt() * dto.getTva() / 100));
+        
+        taxation.setBl(dto.isBl() ? 1 : 0);
+        taxation.setNumerobl(dto.getNumerobl());
+        taxation.setFacture(dto.isFacture() ? 1 : 0);
+        taxation.setNumerofacture(dto.getNumerofacture());
+        taxation.setComment(dto.getComment());
+        taxation.setRef_regl(dto.getRef_regl());
+        taxation.setPs(dto.getPs());
+
+        taxation.setMode_regl(modeRegl);
+        taxation.setPort(port);
+        taxation.setCatprod(catprod);
+        taxation.setCredit(credit);
+        taxation.setUnit(unit);
+        taxation.setLivraison(livraison);
+        taxation.setTaxation(taxationRef);
+
         ElementTaxation savedTaxation = elementTaxationRepository.save(taxation);
 
         // 3. Create and Save Expedition
@@ -74,11 +99,13 @@ public class ExpeditionService {
         expedition.setType(type);
         expedition.setElementTaxation(savedTaxation);
         expedition.setDateCreation(LocalDateTime.now());
+        expedition.setNumerodeclaration(dto.getNumerodeclaration());
+        expedition.setRamasseur(dto.getRamasseurId());
+        expedition.setDateLivraison(dto.getDateLivraison());
         expedition.setStatut(StatutExpedition.EN_COURS);
 
         Expedition savedExpedition = expeditionRepository.save(expedition);
 
-        // 4. Map to DTO
         return mapToResponse(savedExpedition);
     }
 
@@ -88,20 +115,67 @@ public class ExpeditionService {
                 .collect(Collectors.toList());
     }
 
+    public ExpeditionResponseDTO getExpeditionById(Long id) {
+        Expedition expedition = expeditionRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Expédition non trouvée avec ID: " + id));
+        return mapToResponse(expedition);
+    }
+
     private ExpeditionResponseDTO mapToResponse(Expedition expedition) {
         ExpeditionResponseDTO res = new ExpeditionResponseDTO();
         res.setNumeroexpedition(expedition.getNumeroexpedition());
         res.setDateCreation(expedition.getDateCreation());
         res.setStatut(expedition.getStatut().name());
-        res.setExpiditeurId(expedition.getExpiditeur().getCode());
-        res.setDistinataireId(expedition.getDistinataire().getCode());
-        res.setAgenceId(expedition.getAgence().getCode());
         
+        if (expedition.getExpiditeur() != null) {
+            Long code = expedition.getExpiditeur().getCode();
+            res.setExpiditeurId(code);
+            res.setExpiditeurNom(expedition.getExpiditeur().getNom());
+        }
+        if (expedition.getDistinataire() != null) {
+            Long code = expedition.getDistinataire().getCode();
+            res.setDistinataireId(code);
+            res.setDistinataireNom(expedition.getDistinataire().getNom());
+        }
+        if (expedition.getAgence() != null) {
+            Long code = expedition.getAgence().getCode();
+            res.setAgenceId(code);
+            res.setAgenceNom(expedition.getAgence().getLibelle()); // Use libelle or equivalent property
+        }
+        if (expedition.getNature() != null) {
+            res.setNatureId(expedition.getNature().getId());
+        }
+        if (expedition.getType() != null) {
+            res.setTypeId(expedition.getType().getId());
+        }
+
         ElementTaxation taxation = expedition.getElementTaxation();
         if (taxation != null) {
+            res.setColis(taxation.getColis());
+            res.setPoid(taxation.getPoid());
+            res.setVolume(taxation.getVolume());
+            res.setEtiquette(taxation.getEtiquette());
+            res.setEncombrement(taxation.getEncombrement());
+            res.setValeurDeclaree(taxation.getValeurDeclaree());
+            res.setFond(taxation.getFond());
             res.setHt(taxation.getHt());
             res.setTva(taxation.getTva());
             res.setTtc(taxation.getTtc());
+            res.setBl(taxation.getBl() != 0);
+            res.setNumerobl(taxation.getNumerobl());
+            res.setFacture(taxation.getFacture() != 0);
+            res.setNumerofacture(taxation.getNumerofacture());
+            res.setComment(taxation.getComment());
+            res.setRef_regl(taxation.getRef_regl());
+            res.setPs(taxation.getPs());
+
+            if (taxation.getMode_regl() != null) res.setModeReglId(taxation.getMode_regl().getId());
+            if (taxation.getPort() != null) res.setPortId(taxation.getPort().getId());
+            if (taxation.getCatprod() != null) res.setCatprodId(taxation.getCatprod().getId());
+            if (taxation.getCredit() != null) res.setCreditId(taxation.getCredit().getId());
+            if (taxation.getUnit() != null) res.setUnitId(taxation.getUnit().getId());
+            if (taxation.getLivraison() != null) res.setLivraisonId(taxation.getLivraison().getId());
+            if (taxation.getTaxation() != null) res.setTaxationId(taxation.getTaxation().getId());
         }
         
         return res;

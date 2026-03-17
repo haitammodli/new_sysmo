@@ -1,0 +1,71 @@
+<div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
+  <div class="sm:flex sm:items-center">
+    <div class="sm:flex-auto">
+      <h1 class="text-3xl font-bold leading-6 text-gray-900">Expéditions SDTM</h1>
+      <p class="mt-2 text-sm text-gray-700">Une liste de toutes les expéditions comprenant leur numéro, la date, l'expéditeur et le statut.</p>
+    </div>
+    <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
+      <button type="button" routerLink="/dashboard/expeditions/add" class="block rounded-md bg-indigo-600 px-6 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+        Nouvelle Expédition
+      </button>
+    </div>
+  </div>
+  
+  <div class="mt-8 flow-root">
+    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
+        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+          <table class="min-w-full divide-y divide-gray-300">
+            <thead class="bg-gray-50">
+              <tr>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">N° Expédition</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date et Heure</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Expéditeur</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Agence</th>
+                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Statut</th>
+                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
+                  <span class="sr-only">Visualiser</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 bg-white">
+              <tr *ngFor="let exp of expeditions" class="hover:bg-gray-50 transition-colors">
+                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 font-mono">
+                  #{{exp.numeroexpedition}}
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {{exp.dateCreation | date:'dd/MM/yyyy HH:mm'}}
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
+                  {{exp.expiditeurNom || ('Client Num. ' + exp.expiditeurId)}}
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  {{exp.agenceNom || ('Agence ' + exp.agenceId)}}
+                </td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset shadow-sm" [ngClass]="getBadgeClass(exp.statut)">
+                    {{exp.statut}}
+                  </span>
+                </td>
+                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                  <a [routerLink]="['/dashboard/expeditions', exp.numeroexpedition]" class="text-indigo-600 hover:text-indigo-900 flex items-center justify-end">
+                    <span>Visualiser</span>
+                    <svg class="ml-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                    </svg>
+                  </a>
+                </td>
+              </tr>
+
+              <tr *ngIf="expeditions.length === 0">
+                <td colspan="6" class="px-6 py-12 text-center text-gray-500">
+                  Aucune expédition trouvée. Cliquez sur "Nouvelle Expédition" pour commencer.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
