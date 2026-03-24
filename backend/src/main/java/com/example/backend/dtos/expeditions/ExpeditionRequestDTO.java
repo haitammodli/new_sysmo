@@ -18,7 +18,7 @@ public class ExpeditionRequestDTO {
     private Long natureId;
     private Long typeId;
 
-    // ElementTaxation Details (Flattened)
+    // ElementTaxation Details
     private int colis;
     private double poid;
     private double volume;

@@ -34,6 +34,10 @@
             <dt class="font-medium text-gray-900">Agence</dt>
             <dd class="text-gray-700 text-right">{{expedition.agenceNom}} <span class="text-xs text-gray-400">({{expedition.agenceId}})</span></dd>
           </div>
+          <div class="py-3 flex justify-between gap-4">
+            <dt class="font-medium text-gray-900">Ramasseur</dt>
+            <dd class="text-gray-700 text-right">{{expedition.ramasseurNom}} <span class="text-xs text-gray-400">({{expedition.ramasseurId}})</span></dd>
+          </div>
           <div *ngIf="expedition.ramasseurId" class="py-3 flex justify-between gap-4">
             <dt class="font-medium text-gray-900">Ramasseur</dt>
             <dd class="text-gray-700 text-right">{{expedition.ramasseurNom}} <span class="text-xs text-gray-400">({{expedition.ramasseurId}})</span></dd>

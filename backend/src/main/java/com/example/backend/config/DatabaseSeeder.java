@@ -54,7 +54,7 @@ public class DatabaseSeeder implements CommandLineRunner {
 
         // --- 2. AGENCE ---
         com.example.backend.models.logistique.Agence agenceCentrale = new com.example.backend.models.logistique.Agence();
-        agenceCentrale.setLibelle("Agence Centrale");
+        agenceCentrale.setNom("Agence Centrale");
         agenceCentrale.setVille("Casablanca");
         agenceCentrale = agenceRepository.save(agenceCentrale);
         System.out.println(">>> SEEDED AGENCE ID: " + agenceCentrale.getCode());

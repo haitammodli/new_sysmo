@@ -45,17 +45,18 @@ public class ExpeditionService {
         // 1. Fetch Relationships optimally
         User expiditeur = dto.getExpiditeurId() != null ? userRepository.getReferenceById(dto.getExpiditeurId()) : null;
         User destinataire = dto.getDistinataireId() != null ? userRepository.getReferenceById(dto.getDistinataireId()) : null;
+        User ramasseur = dto.getRamasseurId() != null ? userRepository.getReferenceById(dto.getRamasseurId()) : null;
         Agence agence = dto.getAgenceId() != null ? agenceRepository.getReferenceById(dto.getAgenceId()) : null;
 
-        ReferenceData nature = dto.getNatureId() != null ? referenceDataRepository.findById(dto.getNatureId()).orElse(null) : null;
-        ReferenceData type = dto.getTypeId() != null ? referenceDataRepository.findById(dto.getTypeId()).orElse(null) : null;
-        ReferenceData modeRegl = dto.getModeReglId() != null ? referenceDataRepository.findById(dto.getModeReglId()).orElse(null) : null;
-        ReferenceData port = dto.getPortId() != null ? referenceDataRepository.findById(dto.getPortId()).orElse(null) : null;
-        ReferenceData catprod = dto.getCatprodId() != null ? referenceDataRepository.findById(dto.getCatprodId()).orElse(null) : null;
-        ReferenceData credit = dto.getCreditId() != null ? referenceDataRepository.findById(dto.getCreditId()).orElse(null) : null;
-        ReferenceData unit = dto.getUnitId() != null ? referenceDataRepository.findById(dto.getUnitId()).orElse(null) : null;
-        ReferenceData livraison = dto.getLivraisonId() != null ? referenceDataRepository.findById(dto.getLivraisonId()).orElse(null) : null;
-        ReferenceData taxationRef = dto.getTaxationId() != null ? referenceDataRepository.findById(dto.getTaxationId()).orElse(null) : null;
+        ReferenceData nature = dto.getNatureId() != null ? referenceDataRepository.getReferenceById(dto.getNatureId()) : null;
+        ReferenceData type = dto.getTypeId() != null ? referenceDataRepository.getReferenceById(dto.getTypeId()) : null;
+        ReferenceData modeRegl = dto.getModeReglId() != null ? referenceDataRepository.getReferenceById(dto.getModeReglId()) : null;
+        ReferenceData port = dto.getPortId() != null ? referenceDataRepository.getReferenceById(dto.getPortId()) : null;
+        ReferenceData catprod = dto.getCatprodId() != null ? referenceDataRepository.getReferenceById(dto.getCatprodId()) : null;
+        ReferenceData credit = dto.getCreditId() != null ? referenceDataRepository.getReferenceById(dto.getCreditId()) : null;
+        ReferenceData unit = dto.getUnitId() != null ? referenceDataRepository.getReferenceById(dto.getUnitId()) : null;
+        ReferenceData livraison = dto.getLivraisonId() != null ? referenceDataRepository.getReferenceById(dto.getLivraisonId()) : null;
+        ReferenceData taxationRef = dto.getTaxationId() != null ? referenceDataRepository.getReferenceById(dto.getTaxationId()) : null;
 
         // 2. Create and Save ElementTaxation
         ElementTaxation taxation = new ElementTaxation();
@@ -100,7 +101,7 @@ public class ExpeditionService {
         expedition.setElementTaxation(savedTaxation);
         expedition.setDateCreation(LocalDateTime.now());
         expedition.setNumerodeclaration(dto.getNumerodeclaration());
-        expedition.setRamasseur(dto.getRamasseurId());
+        expedition.setRamasseur(ramasseur);
         expedition.setDateLivraison(dto.getDateLivraison());
         expedition.setStatut(StatutExpedition.EN_COURS);
 
@@ -140,7 +141,7 @@ public class ExpeditionService {
         if (expedition.getAgence() != null) {
             Long code = expedition.getAgence().getCode();
             res.setAgenceId(code);
-            res.setAgenceNom(expedition.getAgence().getLibelle()); // Use libelle or equivalent property
+            res.setAgenceNom(expedition.getAgence().getNom());
         }
         if (expedition.getNature() != null) {
             res.setNatureId(expedition.getNature().getId());

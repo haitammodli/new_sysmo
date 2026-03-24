@@ -23,7 +23,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   selectedRole: string = 'ALL';
   showBlacklisted: boolean = false;
   
-  roles: string[] = ['ALL', 'ADMIN', 'CLIENT', 'CHEFAGENCE', 'AGENTMODIFICATION', 'RESPONSABLEMODIFICATION','EXPEDITEUR', 'DESTINATAIRE'];
+  roles: string[] = ['ALL', 'ADMIN', 'CLIENT', 'CHEFAGENCE', 'AGENTMODIFICATION', 'RESPONSABLEMODIFICATION','EXPEDITEUR', 'DESTINATAIRE' , 'RAMASSEUR' , 'DIRECTION'];
 
   // --- MODAL STATE (ADD & EDIT) ---
   showAddModal: boolean = false;

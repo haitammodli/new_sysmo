@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ExpeditionService } from '../services/expedition.service';
+import { ExpeditionService } from '../../../core/services/expedition.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { Subject, of } from 'rxjs';
 import { UserService } from '../../../core/services/user.service';
+import { ReferenceDataService } from '../../../core/services/reference-data.service';
 
 @Component({
   selector: 'app-add-expedition',
@@ -30,20 +31,22 @@ export class AddExpeditionComponent implements OnInit {
   showDestinataireDropdown = false;
   showRamasseurDropdown = false;
 
-  // Mocked Reference Data
-  natures = [{id: 1, libelle: 'Normal'}, {id: 2, libelle: 'Fragile'}];
-  types = [{id: 1, libelle: 'Messagerie'}, {id: 2, libelle: 'Affrètement'}];
-  ports = [{id: 1, libelle: 'Port Payé'}, {id: 2, libelle: 'Port Dû'}];
-  modes = [{id: 1, libelle: 'Espèces'}, {id: 2, libelle: 'Chèque'}, {id: 3, libelle: 'Virement'}];
+  // Dynamically fetched Reference Data
+  natures: any[] = [];
+  types: any[] = [];
+  ports: any[] = [];
+  modes: any[] = [];
 
   constructor(
     private fb: FormBuilder,
     private expeditionService: ExpeditionService,
     private userService: UserService,
+    private referenceDataService: ReferenceDataService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
+    this.loadReferenceData();
     this.addForm = this.fb.group({
       // Relationships (Hidden IDs)
       expiditeurId: [null, Validators.required],
@@ -120,6 +123,13 @@ export class AddExpeditionComponent implements OnInit {
     this.addForm.get('tva')?.valueChanges.subscribe(() => this.calculateTTC());
   }
 
+  loadReferenceData() {
+    this.referenceDataService.getByCategorie('NATURE').subscribe(data => this.natures = data);
+    this.referenceDataService.getByCategorie('TYPE').subscribe(data => this.types = data);
+    this.referenceDataService.getByCategorie('PORT').subscribe(data => this.ports = data);
+    this.referenceDataService.getByCategorie('MODE_REGL').subscribe(data => this.modes = data);
+  }
+
   calculateTTC() {
     const ht = this.addForm.get('ht')?.value || 0;
     const tva = this.addForm.get('tva')?.value || 0;
@@ -137,7 +147,7 @@ export class AddExpeditionComponent implements OnInit {
 
   selectAutocomplete(type: string, user: any) {
     if (type === 'expiditeur') {
-      this.addForm.patchValue({ expiditeurId: user.code, expediteurSearch: user.nom + ' ' + user.prenom });
+      this.addForm.patchValue({ expiditeurId: user.code, expiditeurSearch: user.nom + ' ' + user.prenom });
       this.showExpediteurDropdown = false;
     } else if (type === 'distinataire') {
       this.addForm.patchValue({ distinataireId: user.code, destinataireSearch: user.nom + ' ' + user.prenom });

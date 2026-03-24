@@ -17,8 +17,7 @@ public class Agence {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="chef_id")
     private ChefAgence chef;
-
-    private String libelle;
+    private String nom;
     private String ville;
 
 }

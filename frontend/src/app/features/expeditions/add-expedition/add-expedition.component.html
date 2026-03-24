@@ -1,59 +1,64 @@
 <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
   <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Ajouter une Expédition</h1>
-    <p class="mt-2 text-sm text-gray-500">Remplissez les détails pour créer une nouvelle expédition SDTM.</p>
+    <h1 class="text-3xl font-bold text-slate-800 tracking-tight dark:text-slate-300">Ajouter une Expédition</h1>
   </div>
 
   <form [formGroup]="addForm" (ngSubmit)="onSubmit()" class="space-y-8">
     
     <!-- Participants Section -->
-    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
-      <div class="px-4 py-6 sm:p-8">
-        <h2 class="text-base font-semibold leading-7 text-gray-900 mb-6 border-b pb-2">Information Participants</h2>
+    <div class="card-premium md:col-span-2">
+      <div class="px-6 py-6 sm:p-8">
+        <h2 class="text-base font-bold leading-7 text-slate-800 mb-6 flex items-center dark:text-slate-300">
+          <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+          Information Participants
+        </h2>
         
         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-3">
           <!-- Expéditeur Autocomplete -->
           <div class="relative">
-            <label class="block text-sm font-medium leading-6 text-gray-900">Expéditeur *</label>
-            <div class="mt-2 text-black">
-              <input type="text" formControlName="expiditeurSearch" (input)="onSearch('expiditeur', $event)" (focus)="showExpediteurDropdown = expediteurResults.length > 0" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Rechercher...">
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Expéditeur *</label>
+            <div class="mt-2 text-black relative">
+              <svg class="absolute left-3 top-2.5 h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <input type="text" formControlName="expiditeurSearch" (input)="onSearch('expiditeur', $event)" (focus)="showExpediteurDropdown = expediteurResults.length > 0" class="block w-full rounded-lg border-0 py-2 pl-9 pr-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="Rechercher expéditeur">
               <!-- Dropdown -->
-              <div *ngIf="showExpediteurDropdown" class="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border text-black border-gray-200">
+              <div *ngIf="showExpediteurDropdown" class="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-lg border text-black border-slate-200 overflow-hidden">
                 <ul class="max-h-60 overflow-auto py-1 text-base sm:text-sm">
-                  <li *ngFor="let u of expediteurResults" (click)="selectAutocomplete('expiditeur', u)" class="cursor-pointer select-none px-4 py-2 hover:bg-indigo-600 hover:text-white">
-                    {{u.nom}} {{u.prenom}} ({{u.code}})
+                  <li *ngFor="let u of expediteurResults" (click)="selectAutocomplete('expiditeur', u)" class="cursor-pointer select-none px-4 py-2.5 hover:bg-green-50 hover:text-primary transition-colors font-medium">
+                    {{u.nom}} {{u.prenom}} <span class="text-slate-400 text-xs ml-1">({{u.code}})</span>
                   </li>
                 </ul>
               </div>
             </div>
-            <p *ngIf="addForm.get('expiditeurId')?.invalid && addForm.get('expiditeurId')?.touched" class="mt-2 text-sm text-red-600">Requis</p>
+            <p *ngIf="addForm.get('expiditeurId')?.invalid && addForm.get('expiditeurId')?.touched" class="mt-2 text-xs font-medium text-red-500">Sélection requise</p>
           </div>
 
           <!-- Destinataire Autocomplete -->
           <div class="relative">
-            <label class="block text-sm font-medium leading-6 text-gray-900">Destinataire *</label>
-            <div class="mt-2 text-black">
-              <input type="text" formControlName="destinataireSearch" (input)="onSearch('distinataire', $event)" (focus)="showDestinataireDropdown = destinataireResults.length > 0" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Rechercher...">
-              <div *ngIf="showDestinataireDropdown" class="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border text-black border-gray-200">
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Destinataire *</label>
+            <div class="mt-2 text-black relative">
+              <svg class="absolute left-3 top-2.5 h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <input type="text" formControlName="destinataireSearch" (input)="onSearch('distinataire', $event)" (focus)="showDestinataireDropdown = destinataireResults.length > 0" class="block w-full rounded-lg border-0 py-2 pl-9 pr-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="Rechercher destinataire">
+              <div *ngIf="showDestinataireDropdown" class="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-lg border text-black border-slate-200 overflow-hidden">
                 <ul class="max-h-60 overflow-auto py-1 text-base sm:text-sm">
-                  <li *ngFor="let u of destinataireResults" (click)="selectAutocomplete('distinataire', u)" class="cursor-pointer select-none px-4 py-2 hover:bg-indigo-600 hover:text-white">
-                    {{u.nom}} {{u.prenom}} ({{u.code}})
+                  <li *ngFor="let u of destinataireResults" (click)="selectAutocomplete('distinataire', u)" class="cursor-pointer select-none px-4 py-2.5 hover:bg-green-50 hover:text-primary transition-colors font-medium">
+                    {{u.nom}} {{u.prenom}} <span class="text-slate-400 text-xs ml-1">({{u.code}})</span>
                   </li>
                 </ul>
               </div>
             </div>
-            <p *ngIf="addForm.get('distinataireId')?.invalid && addForm.get('distinataireId')?.touched" class="mt-2 text-sm text-red-600">Requis</p>
+            <p *ngIf="addForm.get('distinataireId')?.invalid && addForm.get('distinataireId')?.touched" class="mt-2 text-xs font-medium text-red-500">Sélection requise</p>
           </div>
 
           <!-- Ramasseur Autocomplete -->
           <div class="relative">
-            <label class="block text-sm font-medium leading-6 text-gray-900">Ramasseur</label>
-            <div class="mt-2 text-black">
-              <input type="text" formControlName="ramasseurSearch" (input)="onSearch('ramasseur', $event)" (focus)="showRamasseurDropdown = ramasseurResults.length > 0" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6" placeholder="Rechercher...">
-              <div *ngIf="showRamasseurDropdown" class="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-md border text-black border-gray-200">
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Ramasseur</label>
+            <div class="mt-2 text-black relative">
+              <svg class="absolute left-3 top-2.5 h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <input type="text" formControlName="ramasseurSearch" (input)="onSearch('ramasseur', $event)" (focus)="showRamasseurDropdown = ramasseurResults.length > 0" class="block w-full rounded-lg border-0 py-2 pl-9 pr-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="Rechercher ramasseur">
+              <div *ngIf="showRamasseurDropdown" class="absolute z-10 mt-1 w-full bg-white shadow-lg rounded-lg border text-black border-slate-200 overflow-hidden">
                 <ul class="max-h-60 overflow-auto py-1 text-base sm:text-sm">
-                  <li *ngFor="let u of ramasseurResults" (click)="selectAutocomplete('ramasseur', u)" class="cursor-pointer select-none px-4 py-2 hover:bg-indigo-600 hover:text-white">
-                    {{u.nom}} {{u.prenom}} ({{u.code}})
+                  <li *ngFor="let u of ramasseurResults" (click)="selectAutocomplete('ramasseur', u)" class="cursor-pointer select-none px-4 py-2.5 hover:bg-green-50 hover:text-primary transition-colors font-medium">
+                    {{u.nom}} {{u.prenom}} <span class="text-slate-400 text-xs ml-1">({{u.code}})</span>
                   </li>
                 </ul>
               </div>
@@ -64,15 +69,18 @@
     </div>
 
     <!-- Logistics Details Section -->
-    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
-      <div class="px-4 py-6 sm:p-8">
-        <h2 class="text-base font-semibold leading-7 text-gray-900 mb-6 border-b pb-2">Détails Logistiques</h2>
+    <div class="card-premium md:col-span-2">
+      <div class="px-6 py-6 sm:p-8">
+        <h2 class="text-base font-bold leading-7 text-slate-800 mb-6 flex items-center dark:text-slate-300">
+          <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+          Détails Logistiques
+        </h2>
         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-4">
           
           <div>
-            <label class="block text-sm font-medium leading-6 text-gray-900">Nature</label>
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Nature</label>
             <div class="mt-2 text-black">
-              <select formControlName="natureId" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <select formControlName="natureId" class="block w-full rounded-lg border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all">
                 <option [ngValue]="null">Sélectionnez Nature</option>
                 <option *ngFor="let opt of natures" [value]="opt.id">{{opt.libelle}}</option>
               </select>
@@ -80,9 +88,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium leading-6 text-gray-900">Type</label>
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Type</label>
             <div class="mt-2 text-black">
-              <select formControlName="typeId" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <select formControlName="typeId" class="block w-full rounded-lg border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all">
                 <option [ngValue]="null">Sélectionnez Type</option>
                 <option *ngFor="let opt of types" [value]="opt.id">{{opt.libelle}}</option>
               </select>
@@ -90,9 +98,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium leading-6 text-gray-900">Port</label>
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Port</label>
             <div class="mt-2 text-black">
-              <select formControlName="portId" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <select formControlName="portId" class="block w-full rounded-lg border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all">
                 <option [ngValue]="null">Sélectionnez Port</option>
                 <option *ngFor="let opt of ports" [value]="opt.id">{{opt.libelle}}</option>
               </select>
@@ -100,9 +108,9 @@
           </div>
 
           <div>
-            <label class="block text-sm font-medium leading-6 text-gray-900">Mode Relais</label>
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Mode Relais</label>
             <div class="mt-2 text-black">
-              <select formControlName="modeReglId" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+              <select formControlName="modeReglId" class="block w-full rounded-lg border-0 py-2.5 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all">
                 <option [ngValue]="null">Sélectionnez Mode</option>
                 <option *ngFor="let opt of modes" [value]="opt.id">{{opt.libelle}}</option>
               </select>
@@ -110,21 +118,21 @@
           </div>
 
           <!-- Dimensions -->
-          <div><label class="block text-sm text-gray-900">Colis</label><div class="mt-2 text-black"><input type="number" formControlName="colis" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 sm:text-sm"></div></div>
-          <div><label class="block text-sm text-gray-900">Poids (kg)</label><div class="mt-2 text-black"><input type="number" formControlName="poid" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 sm:text-sm"></div></div>
-          <div><label class="block text-sm text-gray-900">Volume</label><div class="mt-2 text-black"><input type="number" formControlName="volume" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 sm:text-sm"></div></div>
-          <div><label class="block text-sm text-gray-900">Valeur Déclarée</label><div class="mt-2 text-black"><input type="number" formControlName="valeurDeclaree" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-gray-300 sm:text-sm"></div></div>
+          <div><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Colis</label><div class="mt-2 text-black"><input type="number" formControlName="colis" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="0"></div></div>
+          <div><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Poids (kg)</label><div class="mt-2 text-black"><input type="number" formControlName="poid" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="0.0"></div></div>
+          <div><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Volume</label><div class="mt-2 text-black"><input type="number" formControlName="volume" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="0.0"></div></div>
+          <div><label class="block text-sm font-semibold text-slate-700 dark:text-slate-300">Valeur Déclarée</label><div class="mt-2 text-black"><input type="number" formControlName="valeurDeclaree" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="0.00"></div></div>
         </div>
       </div>
     </div>
 
     <!-- Live Financials Section -->
-    <div class="bg-indigo-50 shadow-sm ring-1 ring-indigo-200 sm:rounded-xl md:col-span-2 relative overflow-hidden">
+    <div class="bg-gradient-to-br from-green-50 to-emerald-50 shadow-sm ring-1 ring-green-200/60 rounded-xl md:col-span-2 relative overflow-hidden">
       <!-- Decor -->
-      <div class="absolute -right-16 -top-16 opacity-30 transform rotate-12 bg-indigo-200 h-64 w-64 rounded-full blur-3xl"></div>
-      <div class="px-4 py-8 sm:p-10 relative z-10 text-black">
-        <h2 class="text-xl font-bold leading-7 text-indigo-900 flex items-center mb-6">
-          <svg class="h-6 w-6 mr-2 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <div class="absolute -right-16 -top-16 opacity-40 transform rotate-12 bg-green-200/50 h-64 w-64 rounded-full blur-3xl"></div>
+      <div class="px-6 py-8 sm:p-10 relative z-10 text-black">
+        <h2 class="text-xl font-bold leading-7 text-green-900 flex items-center mb-6">
+          <svg class="h-6 w-6 mr-2 text-primary" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
           Tarification en direct
@@ -132,60 +140,66 @@
         
         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-3 items-end">
           <div>
-            <label class="block text-sm font-medium leading-6 text-indigo-800">Montant HT (MAD)</label>
+            <label class="block text-sm font-semibold leading-6 text-green-800">Montant HT (MAD)</label>
             <div class="mt-2 text-black">
-              <input type="number" formControlName="ht" class="block w-full rounded-lg border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-indigo-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-base sm:leading-6 font-semibold">
+              <input type="number" formControlName="ht" class="block w-full rounded-lg border-0 py-3 px-4 text-slate-900 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-base sm:leading-6 font-bold transition-all">
             </div>
           </div>
           <div>
-            <label class="block text-sm font-medium leading-6 text-indigo-800">TVA (%)</label>
+            <label class="block text-sm font-semibold leading-6 text-green-800">TVA (%)</label>
             <div class="mt-2 text-black">
-              <input type="number" formControlName="tva" class="block w-full rounded-lg border-0 py-2.5 px-4 text-gray-900 shadow-sm ring-1 ring-inset ring-indigo-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-base sm:leading-6 font-semibold">
+              <input type="number" formControlName="tva" class="block w-full rounded-lg border-0 py-3 px-4 text-slate-900 shadow-sm ring-1 ring-inset ring-green-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-base sm:leading-6 font-bold transition-all">
             </div>
           </div>
-          <div class="bg-white p-4 rounded-xl shadow-md border border-indigo-100 flexitems-center justify-between">
-            <span class="text-sm font-semibold text-gray-500 uppercase tracking-wider">Montant TTC</span>
-            <span class="text-3xl font-black text-indigo-600 block mt-1">{{addForm.get('ttc')?.value | number:'1.2-2'}} <span class="text-lg font-bold">MAD</span></span>
+          <div class="bg-white p-5 rounded-xl shadow-md border border-green-100 flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">Montant TTC</span>
+            <span class="text-3xl font-black text-primary block tracking-tight">{{addForm.get('ttc')?.value | number:'1.2-2'}} <span class="text-lg font-bold text-slate-400 ml-1">MAD</span></span>
           </div>
         </div>
       </div>
     </div>
 
     <!-- Documents / Extra -->
-    <div class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2 text-black">
-      <div class="px-4 py-6 sm:p-8">
-        <h2 class="text-base font-semibold leading-7 text-gray-900 mb-6 border-b pb-2">Documents et Notes</h2>
+    <div class="card-premium md:col-span-2 text-black">
+      <div class="px-6 py-6 sm:p-8">
+        <h2 class="text-base font-bold leading-7 text-slate-800 mb-6 flex items-center dark:text-slate-300">
+          <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          Documents et Notes
+        </h2>
         
         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4 items-center">
-          <div class="flex items-center space-x-3">
-            <input type="checkbox" formControlName="bl" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-            <label class="text-sm font-medium text-gray-900">Joint Bon de Livraison (BL)</label>
+          <div class="flex items-center space-x-3 bg-slate-50 p-3 rounded-lg border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer">
+            <input type="checkbox" formControlName="bl" class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary transition-all">
+            <label class="text-sm font-semibold text-slate-700 cursor-pointer w-full">Joindre B.L.</label>
           </div>
           <div>
-            <input type="text" formControlName="numerobl" placeholder="N° BL" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <input type="text" formControlName="numerobl" placeholder="N° Bon de Livraison" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all">
           </div>
           
-          <div class="flex items-center space-x-3">
-            <input type="checkbox" formControlName="facture" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600">
-            <label class="text-sm font-medium text-gray-900">Joint Facture</label>
+          <div class="flex items-center space-x-3 bg-slate-50 p-3 rounded-lg border border-slate-100 hover:bg-slate-100 transition-colors cursor-pointer">
+            <input type="checkbox" formControlName="facture" class="h-5 w-5 rounded border-slate-300 text-primary focus:ring-primary transition-all">
+            <label class="text-sm font-semibold text-slate-700 cursor-pointer w-full ">Joindre Facture</label>
           </div>
           <div>
-            <input type="text" formControlName="numerofacture" placeholder="N° Facture" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+            <input type="text" formControlName="numerofacture" placeholder="N° Facture" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all">
           </div>
         </div>
 
         <div class="mt-8">
-          <label class="block text-sm font-medium leading-6 text-gray-900">Commentaire Additionnel</label>
+          <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Commentaire Additionnel</label>
           <div class="mt-2 text-black">
-            <textarea formControlName="comment" rows="3" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+            <textarea formControlName="comment" rows="3" class="block w-full rounded-lg border-0 py-3 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm sm:leading-6 transition-all" placeholder="Ajouter des notes internes ou des instructions spéciales..."></textarea>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="flex items-center justify-end gap-x-6">
-      <button type="button" routerLink="/dashboard/expeditions" class="text-sm font-semibold leading-6 text-gray-900">Annuler</button>
-      <button type="submit" [disabled]="addForm.invalid" class="rounded-md bg-indigo-600 px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 transition-all">Créer l'Expédition</button>
+    <!-- Actions -->
+    <div class="flex items-center justify-end gap-x-6 pt-4">
+      <button type="button" routerLink="/dashboard/expeditions" class="text-sm font-semibold leading-6 text-slate-500 hover:text-slate-800 transition-colors">Annuler</button>
+      <button type="submit" [disabled]="addForm.invalid" class="rounded-xl bg-primary px-8 py-3 text-sm font-bold text-white shadow-md hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary transition-all">
+        Créer l'Expédition
+      </button>
     </div>
 
   </form>

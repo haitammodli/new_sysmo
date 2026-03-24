@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { ExpeditionService, Expedition } from '../services/expedition.service';
+import { ExpeditionService} from '../../../core/services/expedition.service';
+import { Expedition } from '../../../core/models/expedition.model';
 
 @Component({
   selector: 'app-view-expedition',

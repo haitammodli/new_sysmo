@@ -9,5 +9,6 @@ public class AuthResponseDTO {
     private Long code;
     private String nom;
     private String prenom;
+    private String email;
     private String role;
 }

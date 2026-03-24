@@ -1,0 +1,101 @@
+<div class="space-y-8">
+  <!-- Metric Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+    <!-- Total Shipments -->
+    <div class="card-premium p-6 hover:-translate-y-1 hover:shadow-lg cursor-default">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-slate-500 dark:text-slate-400 font-semibold tracking-wide text-sm uppercase">Total Shipments</h3>
+        <div class="p-2.5 bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-xl">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="text-4xl font-bold text-slate-800 dark:text-slate-100">1,284</div>
+      <p class="text-sm text-primary mt-3 flex items-center font-medium">
+        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+        </svg>
+        <span>+12.5% from last week</span>
+      </p>
+    </div>
+
+    <!-- Pending Modifications -->
+    <div class="card-premium p-6 hover:-translate-y-1 hover:shadow-lg cursor-default">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-slate-500 dark:text-slate-400 font-semibold tracking-wide text-sm uppercase">Pending Mods</h3>
+        <div class="p-2.5 bg-amber-50 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 rounded-xl">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="text-4xl font-bold text-slate-800 dark:text-slate-100">42</div>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mt-3 font-medium">Requires agent attention</p>
+    </div>
+
+    <!-- Resolved Today -->
+    <div class="card-premium p-6 hover:-translate-y-1 hover:shadow-lg cursor-default">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-slate-500 dark:text-slate-400 font-semibold tracking-wide text-sm uppercase">Resolved Today</h3>
+        <div class="p-2.5 bg-primary/10 dark:bg-primary/20 text-primary rounded-xl">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+        </div>
+      </div>
+      <div class="text-4xl font-bold text-slate-800 dark:text-slate-100">18</div>
+      <p class="text-sm text-primary mt-3 flex items-center font-medium">
+        <svg class="w-4 h-4 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+        </svg>
+        <span>+5 from yesterday</span>
+      </p>
+    </div>
+
+  </div>
+
+  <!-- Sleek Activity Timeline -->
+  <div class="card-premium overflow-hidden">
+    <div class="px-7 py-5 border-b border-border dark:border-slate-700 bg-slate-50/50 dark:bg-slate-800/50 flex justify-between items-center transition-colors">
+      <h3 class="font-bold text-lg text-slate-800 dark:text-slate-100">Recent Activity</h3>
+      <button class="text-sm font-medium text-primary hover:text-green-700 dark:hover:text-green-400 transition-colors">View All</button>
+    </div>
+    <div class="p-7">
+      <div class="relative border-l-2 border-slate-100 dark:border-slate-700 ml-3 space-y-8">
+        
+        <!-- Timeline Item 1 -->
+        <div class="relative pl-6">
+          <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-primary ring-4 ring-white dark:ring-slate-800 transition-colors"></div>
+          <div class="flex justify-between items-start mb-1">
+            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Expedition #EXP-9302 Validated</h4>
+            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Just now</span>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">Client validation received. Shipment is now ready for dispatch from Casablanca Hub.</p>
+        </div>
+
+        <!-- Timeline Item 2 -->
+        <div class="relative pl-6">
+          <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-amber-400 ring-4 ring-white dark:ring-slate-800 transition-colors"></div>
+          <div class="flex justify-between items-start mb-1">
+            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">Modification Requested (#EXP-9105)</h4>
+            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">2h ago</span>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">Agent Youssef requested a destination address change for shipment EXP-9105.</p>
+        </div>
+
+        <!-- Timeline Item 3 -->
+        <div class="relative pl-6">
+          <div class="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-blue-500 ring-4 ring-white dark:ring-slate-800 transition-colors"></div>
+          <div class="flex justify-between items-start mb-1">
+            <h4 class="text-sm font-bold text-slate-800 dark:text-slate-100">New User Registered</h4>
+            <span class="text-xs font-medium text-slate-500 dark:text-slate-400">5h ago</span>
+          </div>
+          <p class="text-sm text-slate-600 dark:text-slate-400">Admin approved access for 'Chef Agence Rabat'.</p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .card-premium {
+    @apply bg-surface dark:bg-slate-800 rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.1)] border border-border dark:border-slate-700 border-opacity-50 transition-all duration-200;
+  }
+}
+
 /* You can add global styles to this file, and also import other style files */
 html, body {
-  @apply bg-background text-text;
+  @apply bg-background dark:bg-slate-950 text-text dark:text-slate-100 font-sans antialiased transition-colors duration-300;
 }

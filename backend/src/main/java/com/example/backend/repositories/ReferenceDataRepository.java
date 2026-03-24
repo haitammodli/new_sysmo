@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface ReferenceDataRepository extends JpaRepository<ReferenceData, Long> {
     List<ReferenceData> findByCategorieAndActifTrue(String categorie);
+
+    List<ReferenceData> findByCategorie(String categorie);
 }

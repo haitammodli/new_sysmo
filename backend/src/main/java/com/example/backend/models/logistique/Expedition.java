@@ -1,6 +1,5 @@
 package com.example.backend.models.logistique;
 
-
 import com.example.backend.enums.StatutExpedition;
 import com.example.backend.models.systeme.ReferenceData;
 import com.example.backend.models.users.User;
@@ -22,7 +21,9 @@ public class Expedition {
     private Long numeroexpedition;
 
     private Long numerodeclaration;
-    private Long ramasseur;
+    @JoinColumn(name = "ramasseur_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User ramasseur;
 
     private LocalDateTime dateCreation;
     private LocalDateTime dateLivraison;
@@ -34,7 +35,6 @@ public class Expedition {
     @JoinColumn(name = "type_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ReferenceData type;
-
 
     @JoinColumn(name = "expiditeur_id")
     @ManyToOne(fetch = FetchType.LAZY)
@@ -56,4 +56,3 @@ public class Expedition {
     @Column(length = 20, nullable = false)
     private StatutExpedition statut = StatutExpedition.EN_COURS;
 }
-

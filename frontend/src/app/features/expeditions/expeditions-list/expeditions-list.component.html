@@ -1,71 +1,89 @@
-<div class="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
-  <div class="sm:flex sm:items-center">
+<div class="px-4 sm:px-6 lg:px-8 py-8 w-full mx-auto">
+  <div class="sm:flex sm:items-center justify-between mb-8">
     <div class="sm:flex-auto">
-      <h1 class="text-3xl font-bold leading-6 text-gray-900">Expéditions SDTM</h1>
-      <p class="mt-2 text-sm text-gray-700">Une liste de toutes les expéditions comprenant leur numéro, la date, l'expéditeur et le statut.</p>
+      <h1 class="text-2xl font-bold text-slate-800 tracking-tight dark:text-slate-300">Expéditions</h1>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-      <button type="button" routerLink="/dashboard/expeditions/add" class="block rounded-md bg-indigo-600 px-6 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+      <button type="button" routerLink="/dashboard/expeditions/add" class="flex items-center space-x-2 rounded-xl bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-200">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-4 h-4 mr-1">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+        </svg>
         Nouvelle Expédition
       </button>
     </div>
   </div>
   
-  <div class="mt-8 flow-root">
-    <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-      <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-        <div class="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
-          <table class="min-w-full divide-y divide-gray-300">
-            <thead class="bg-gray-50">
-              <tr>
-                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6">N° Expédition</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Date et Heure</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Expéditeur</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Agence</th>
-                <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Statut</th>
-                <th scope="col" class="relative py-3.5 pl-3 pr-4 sm:pr-6">
-                  <span class="sr-only">Visualiser</span>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-gray-200 bg-white">
-              <tr *ngFor="let exp of expeditions" class="hover:bg-gray-50 transition-colors">
-                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 font-mono">
-                  #{{exp.numeroexpedition}}
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {{exp.dateCreation | date:'dd/MM/yyyy HH:mm'}}
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm font-medium text-gray-900">
-                  {{exp.expiditeurNom || ('Client Num. ' + exp.expiditeurId)}}
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  {{exp.agenceNom || ('Agence ' + exp.agenceId)}}
-                </td>
-                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                  <span class="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium ring-1 ring-inset shadow-sm" [ngClass]="getBadgeClass(exp.statut)">
-                    {{exp.statut}}
-                  </span>
-                </td>
-                <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                  <a [routerLink]="['/dashboard/expeditions', exp.numeroexpedition]" class="text-indigo-600 hover:text-indigo-900 flex items-center justify-end">
-                    <span>Visualiser</span>
-                    <svg class="ml-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                    </svg>
-                  </a>
-                </td>
-              </tr>
+  <div class="card-premium overflow-hidden">
+    <div class="overflow-x-auto">
+      <table class="min-w-full divide-y divide-border">
+        <thead class="bg-slate-50">
+          <tr>
+            <th scope="col" class="py-4 pl-6 pr-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">N° Expédition</th>
+            <th scope="col" class="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Date et Heure</th>
+            <th scope="col" class="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Expéditeur</th>
+            <th scope="col" class="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Agence</th>
+            <th scope="col" class="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Statut</th>
+            <th scope="col" class="relative py-4 pl-3 pr-6">
+              <span class="sr-only">Actions</span>
+            </th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-border bg-white">
+          <tr *ngFor="let exp of expeditions" class="hover:bg-slate-50/80 transition-colors group">
+            <td class="whitespace-nowrap py-5 pl-6 pr-3 text-sm font-bold text-slate-800 font-mono">
+              #{{exp.numeroexpedition}}
+            </td>
+            <td class="whitespace-nowrap px-3 py-5 text-sm text-slate-500 font-medium">
+              {{exp.dateCreation | date:'dd/MM/yyyy HH:mm'}}
+            </td>
+            <td class="whitespace-nowrap px-3 py-5 text-sm font-medium text-slate-800">
+              <div class="flex items-center">
+                <div class="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-primary font-bold text-xs mr-3">
+                  {{ (exp.expiditeurNom ? exp.expiditeurNom.charAt(0) : 'C') | uppercase }}
+                </div>
+                <span>{{exp.expiditeurNom || ('Client Num. ' + exp.expiditeurId)}}</span>
+              </div>
+            </td>
+            <td class="whitespace-nowrap px-3 py-5 text-sm text-slate-500">
+              {{exp.agenceNom || ('Agence ' + exp.agenceId)}}
+            </td>
+            <td class="whitespace-nowrap px-3 py-5 text-sm">
+              <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold border" [ngClass]="getBadgeClass(exp.statut)">
+                <span class="w-1.5 h-1.5 rounded-full mr-1.5" [ngClass]="{'bg-green-500': exp.statut === 'LIVRE', 'bg-yellow-500': exp.statut === 'EN_COURS', 'bg-red-500': exp.statut === 'ANNULE', 'bg-slate-400': !exp.statut}"></span>
+                {{exp.statut}}
+              </span>
+            </td>
+            <td class="relative whitespace-nowrap py-5 pl-3 pr-6 text-right text-sm font-medium">
+              <a [routerLink]="['/dashboard/expeditions', exp.numeroexpedition]" class="inline-flex items-center justify-center p-2 rounded-lg text-slate-400 hover:text-primary hover:bg-green-50 transition-colors">
+                <span class="sr-only">Visualiser</span>
+                <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+                </svg>
+              </a>
+            </td>
+          </tr>
 
-              <tr *ngIf="expeditions.length === 0">
-                <td colspan="6" class="px-6 py-12 text-center text-gray-500">
-                  Aucune expédition trouvée. Cliquez sur "Nouvelle Expédition" pour commencer.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+          <tr *ngIf="expeditions.length === 0">
+            <td colspan="6" class="px-6 py-16 text-center">
+              <div class="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-slate-100 mb-4">
+                <svg class="h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+              </div>
+              <h3 class="mt-2 text-sm font-semibold text-slate-800">Aucune expédition</h3>
+              <p class="mt-1 text-sm text-slate-500">Commencez par créer une nouvelle expédition pour votre client.</p>
+              <div class="mt-6">
+                <button type="button" routerLink="/dashboard/expeditions/add" class="inline-flex items-center rounded-xl bg-primary px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary transition-all duration-200">
+                  <svg class="-ml-0.5 mr-1.5 h-4 w-4" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                  </svg>
+                  Nouvelle Expédition
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
