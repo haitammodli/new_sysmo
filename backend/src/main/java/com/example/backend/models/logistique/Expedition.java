@@ -17,8 +17,8 @@ import java.time.LocalDateTime;
 public class Expedition {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long numeroexpedition;
+    @Column(name = "numero_expedition", length = 50, nullable = false)
+    private String numeroExpedition;
 
     private Long numerodeclaration;
     @JoinColumn(name = "ramasseur_id")
@@ -36,13 +36,13 @@ public class Expedition {
     @ManyToOne(fetch = FetchType.LAZY)
     private ReferenceData type;
 
-    @JoinColumn(name = "expiditeur_id")
+    @JoinColumn(name = "expediteur_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User expiditeur;
+    private User expediteur;
 
-    @JoinColumn(name = "distinataire_id")
+    @JoinColumn(name = "destinataire_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User distinataire;
+    private User destinataire;
 
     @JoinColumn(name = "agence_id")
     @ManyToOne(fetch = FetchType.LAZY)

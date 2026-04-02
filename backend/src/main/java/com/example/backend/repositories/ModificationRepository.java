@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface ModificationRepository extends JpaRepository<Modification, Integer> {
     List<Modification> findByExpedition(Expedition expedition);
+
     long countByExpedition(Expedition expedition);
 }

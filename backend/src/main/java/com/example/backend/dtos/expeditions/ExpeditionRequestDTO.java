@@ -6,7 +6,8 @@ import java.time.LocalDateTime;
 @Data
 public class ExpeditionRequestDTO {
 
-    // --- Expedition General Info ---
+
+    private String numeroExpedition;
     private Long numerodeclaration;
     private Long ramasseurId;
     private LocalDateTime dateLivraison;

@@ -8,27 +8,72 @@ import { ViewExpeditionComponent } from './features/expeditions/view-expedition/
 import { RoleGuard } from './core/guards/role.guard';
 import { ReferenceManagementComponent } from './features/reference-data/reference-management/reference-management.component';
 import { DashboardOverviewComponent } from './features/dashboard/dashboard-overview/dashboard-overview.component';
+import { AgenceListComponent } from './features/agences/agence-list/agence-list.component';
+import { AdminPanelComponent } from './features/admin-panel/admin-panel.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { 
-    path: 'dashboard', 
+  {
+    path: 'dashboard',
     component: DashboardComponent,
     children: [
       { path: '', redirectTo: 'overview', pathMatch: 'full' },
       { path: 'overview', component: DashboardOverviewComponent },
-      { 
-        path: 'users', 
-        component: UserListComponent,
-        canActivate: [RoleGuard],
-        data: { roles: ['ADMIN', 'RESPONSABLEMODIFICATION'] }
-      },
+      //{ path: 'reference-data', component: ReferenceManagementComponent },
       { path: 'expeditions', component: ExpeditionsListComponent },
       { path: 'expeditions/add', component: AddExpeditionComponent },
       { path: 'expeditions/:id', component: ViewExpeditionComponent },
-      { path: 'reference-data', component: ReferenceManagementComponent }
+
+      // Admin Panel — unified wrapper for the four core sections
+      {
+        path: 'admin',
+        component: AdminPanelComponent,
+        children: [
+          { path: '', redirectTo: 'expeditions', pathMatch: 'full' },
+          //{ path: 'expeditions', component: ExpeditionsListComponent },
+          //{ path: 'expeditions/add', component: AddExpeditionComponent },
+          //{ path: 'expeditions/:id', component: ViewExpeditionComponent },
+          {
+            path: 'expeditions/:id',
+            component: ViewExpeditionComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['ADMIN', 'RESPONSABLEMODIFICATION'] }
+          },
+          {
+            path: 'expeditions/add',
+            component: AddExpeditionComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['ADMIN', 'RESPONSABLEMODIFICATION'] }
+          },
+          {
+            path: 'expeditions',
+            component: ExpeditionsListComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['ADMIN', 'RESPONSABLEMODIFICATION'] }
+          },
+          {
+            path: 'reference-data',
+            component: ReferenceManagementComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['ADMIN', 'RESPONSABLEMODIFICATION'] }
+          },
+          {
+            path: 'agences',
+            component: AgenceListComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['ADMIN', 'RESPONSABLEMODIFICATION'] }
+          },
+          {
+            path: 'users',
+            component: UserListComponent,
+            canActivate: [RoleGuard],
+            data: { roles: ['ADMIN', 'RESPONSABLEMODIFICATION'] }
+          },
+        ]
+      }
     ]
   },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '**', redirectTo: '/login' }
 ];
+

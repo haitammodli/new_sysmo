@@ -41,6 +41,10 @@ public class ReferenceDataController {
     }
 
     @GetMapping("/category/{category}")
+    public ResponseEntity<List<ReferenceDataResponseDTO>> getByCategory(@PathVariable("category") String category) {
+        return ResponseEntity.ok(referenceDataService.getByCategory(category));
+    }
+    @GetMapping("/categoryA/{category}")
     public ResponseEntity<List<ReferenceDataResponseDTO>> getActiveByCategory(@PathVariable("category") String category) {
         return ResponseEntity.ok(referenceDataService.getActiveByCategory(category));
     }

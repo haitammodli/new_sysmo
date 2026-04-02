@@ -36,6 +36,12 @@ export class ReferenceManagementComponent implements OnInit {
       error: (err) => console.error('Error loading references', err)
     });
   }
+  loadReferencesA() {
+    this.referenceDataService.getActiveByCategorie(this.selectedCategory).subscribe({
+      next: (data) => this.references = data,
+      error: (err) => console.error('Error loading references', err)
+    });
+  }
 
   onCategoryChange(event: Event) {
     const target = event.target as HTMLSelectElement;

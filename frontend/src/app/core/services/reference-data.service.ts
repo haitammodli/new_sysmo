@@ -29,6 +29,9 @@ export class ReferenceDataService {
   getByCategorie(categorie: string): Observable<ReferenceData[]> {
     return this.http.get<ReferenceData[]>(`${this.apiUrl}/category/${categorie}`);
   }
+  getActiveByCategorie(categorie: string): Observable<ReferenceData[]> {
+    return this.http.get<ReferenceData[]>(`${this.apiUrl}/categoryA/${categorie}`);
+  }
 
   toggleStatus(id: number): Observable<ReferenceData> {
     return this.http.patch<ReferenceData>(`${this.apiUrl}/${id}/toggle`, {});

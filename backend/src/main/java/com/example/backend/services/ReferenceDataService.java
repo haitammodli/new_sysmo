@@ -57,6 +57,11 @@ public class ReferenceDataService {
        return maptoDTO(referenceData);
     }
 
+    public List<ReferenceDataResponseDTO> getByCategory(String category) {
+        return referenceDataRepository.findByCategorie(category.toUpperCase())
+                .stream()
+                .map(this::maptoDTO).collect(Collectors.toList());
+    }
     public List<ReferenceDataResponseDTO> getActiveByCategory(String category) {
         return referenceDataRepository.findByCategorieAndActifTrue(category.toUpperCase())
                 .stream()

@@ -12,6 +12,7 @@ import com.example.backend.repositories.UserRepository;
 import com.example.backend.security.jwt.JwtUtil;
 import com.example.backend.security.services.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import java.util.List;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -60,6 +61,7 @@ public class AuthService {
 
         User user = createUserByType(request);
 
+        user.setCode(request.getCode());
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setNom(request.getNom());
@@ -67,11 +69,12 @@ public class AuthService {
 
         userRepository.save(user);
 
-        if (user instanceof ChefAgence chef && request.getAgenceId() != null) {
-            Agence agence = agenceRepository.findById(request.getAgenceId())
-                    .orElseThrow(() -> new RuntimeException("Error: Agence not found!"));
-            agence.setChef(chef);
-            agenceRepository.save(agence);
+        if (user instanceof ChefAgence chef && request.getAgenceIds() != null && !request.getAgenceIds().isEmpty()) {
+            List<Agence> agences = agenceRepository.findAllById(request.getAgenceIds());
+            agences.forEach(agence -> {
+                agence.setChef(chef);
+                agenceRepository.save(agence);
+            });
         }
     }
 

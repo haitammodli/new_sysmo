@@ -7,7 +7,6 @@
         <img src="assets/logo1.svg" alt="SDTM Logo" class="h-10 w-auto">
         <div class="flex flex-col">
           <span class="text-sm font-bold text-primary leading-tight tracking-tight">SDTM</span>
-          <span class="text-[10px] font-medium text-gray-500 dark:text-slate-400 uppercase tracking-widest">Logistics</span>
         </div>
       </div>
     </div>
@@ -36,39 +35,20 @@
             <span>Expeditions</span>
           </a>
         </li>
-        <!--<li>
-          <a href="#"
-            class="flex items-center space-x-3 px-4 py-3 text-text dark:text-slate-300 hover:bg-green-50 dark:hover:bg-slate-700/50 rounded-lg font-medium transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17l6-6-6-6"></path>
-            </svg>
-            <span>Taxation</span>
-          </a>
-        </li>-->
         @if (authService.hasRole(['ADMIN', 'RESPONSABLEMODIFICATION', 'AGENTMODIFICATION'])) {
         <li>
-          <a routerLink="/dashboard/expeditions/add" routerLinkActive="bg-green-100 dark:bg-primary/20 text-green-800 dark:text-primary"
-            class="flex items-center space-x-3 px-4 py-3 text-text dark:text-slate-300 hover:bg-green-50 dark:hover:bg-slate-700/50 rounded-lg font-medium transition-colors">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-            </svg>
-            <span>Ajouter Expedition</span>
-          </a>
-        </li>
-        }
-        @if (authService.hasRole(['ADMIN', 'RESPONSABLEMODIFICATION'])) {
-        <li>
-          <a routerLink="/dashboard/users" routerLinkActive="bg-green-100 dark:bg-primary/20 text-green-800 dark:text-primary"
+          <a routerLink="/dashboard/admin"
+            routerLinkActive="bg-green-100 dark:bg-primary/20 text-green-800 dark:text-primary"
             class="flex items-center space-x-3 px-4 py-3 text-text dark:text-slate-300 hover:bg-green-50 dark:hover:bg-slate-700/50 rounded-lg font-medium transition-colors">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z">
+                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
               </path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
             </svg>
-            <span>Gestion Utilisateurs</span>
+            <span>Admin Panel</span>
           </a>
         </li>
         }
@@ -92,7 +72,7 @@
   <main class="flex-1 flex flex-col overflow-hidden">
     <!-- Top Header -->
     <header class="h-16 bg-surface dark:bg-slate-800 border-b border-border dark:border-slate-700 flex items-center justify-between px-6 shadow-sm z-10 transition-colors duration-300">
-      <h2 class="text-xl font-semibold text-text dark:text-slate-100">Overview</h2>
+      <h2 class="text-xl font-semibold text-text dark:text-slate-100"></h2>
       <div class="flex items-center space-x-4">
         
         <!-- Dark Mode Toggle -->

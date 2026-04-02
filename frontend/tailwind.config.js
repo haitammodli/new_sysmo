@@ -8,10 +8,10 @@ module.exports = {
     extend: {
       colors: {
         primary: '#2ecc71',
-        background: '#F8FAFC',
-        surface: '#FFFFFF',
+        background: '#edeff1',
+        surface: '#f5f5f5',
         text: '#1E293B',
-        border: '#E2E8F0',
+        border: '#2ecc71',
       },
       fontFamily: {
         sans: ['Inter', 'Roboto', 'Segoe UI', 'sans-serif'],

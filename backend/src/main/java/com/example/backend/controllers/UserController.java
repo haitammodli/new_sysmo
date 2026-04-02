@@ -83,7 +83,7 @@ public class UserController {
         return ResponseEntity.ok(responseDTOs);
     }
 
-    // Fixed: Added ("id")
+
     @DeleteMapping("/{id}")
     @org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN', 'RESPONSABLE_MODIFICATION')")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id) {
@@ -93,7 +93,7 @@ public class UserController {
         return ResponseEntity.notFound().build();
     }
 
-    // Fixed: Added ("id")
+
     @PutMapping("/{id}")
     @org.springframework.security.access.prepost.PreAuthorize("hasAnyRole('ADMIN', 'RESPONSABLE_MODIFICATION')")
     public ResponseEntity<?> updateUser(@PathVariable("id") Long id, @RequestBody java.util.Map<String, Object> updates) {

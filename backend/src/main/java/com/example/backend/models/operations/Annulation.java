@@ -1,6 +1,8 @@
 package com.example.backend.models.operations;
 
-import com.example.backend.enums.Statut;
+
+import com.example.backend.enums.StatutModificationAnn;
+import com.example.backend.enums.TypeAnnulation;
 import com.example.backend.models.logistique.Expedition;
 import com.example.backend.models.systeme.ReferenceData;
 import jakarta.persistence.*;
@@ -23,9 +25,11 @@ public class Annulation {
     @JoinColumn(name = "numero_expedition", nullable = false, unique = true)
     private Expedition expedition;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "motif_annulation_id", nullable = false)
-    private ReferenceData motifAnnulation;
+    private String motifAnnulation;
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 30 ,nullable = false)
+    private TypeAnnulation typeAnnulation;
 
     //DOCUMENTS
     @Column(name = "chemin_fichier_decision", length = 500)
@@ -56,5 +60,5 @@ public class Annulation {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private Statut statut = Statut.EN_ATTENTE;
+    private StatutModificationAnn statut = StatutModificationAnn.EN_ATTENTE;
 }

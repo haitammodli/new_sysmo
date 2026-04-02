@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 @Data
 public class ExpeditionResponseDTO {
     // Core Info
-    private Long numeroexpedition;
+    private String numeroexpedition;
     private Long numerodeclaration;
     private LocalDateTime dateCreation;
     private LocalDateTime dateLivraison;

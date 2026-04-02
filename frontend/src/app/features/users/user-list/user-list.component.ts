@@ -5,6 +5,8 @@ import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { UserService } from '../../../core/services/user.service';
 import { User } from '../../../core/models/user.model';
+import { AgenceService } from '../../../core/services/agence.service';
+import { Agence } from '../../../core/models/agence.model';
 
 @Component({
   selector: 'app-user-list',
@@ -25,6 +27,8 @@ export class UserListComponent implements OnInit, OnDestroy {
   
   roles: string[] = ['ALL', 'ADMIN', 'CLIENT', 'CHEFAGENCE', 'AGENTMODIFICATION', 'RESPONSABLEMODIFICATION','EXPEDITEUR', 'DESTINATAIRE' , 'RAMASSEUR' , 'DIRECTION'];
 
+  agences: Agence[] = [];
+
   // --- MODAL STATE (ADD & EDIT) ---
   showAddModal: boolean = false;
   isEditMode: boolean = false;
@@ -41,15 +45,20 @@ export class UserListComponent implements OnInit, OnDestroy {
     secteur: '',
     contact: '',
     typeClient: 'ENTREPRISE',
-    agenceId: null
+    agenceIds: [] as number[],
+    agences: [] as number[] // Used for User update mapping
   };
 
   private subscriptions: Subscription = new Subscription();
 
-  constructor(public userService: UserService) {}
+  constructor(
+    public userService: UserService,
+    private agenceService: AgenceService
+  ) {}
 
   ngOnInit(): void {
     this.loadAllUsers();
+    this.agenceService.getAgences().subscribe(data => this.agences = data);
 
     this.subscriptions.add(
       this.searchSubject.pipe(
@@ -87,7 +96,8 @@ export class UserListComponent implements OnInit, OnDestroy {
       secteur: '',
       contact: '',
       typeClient: 'ENTREPRISE',
-      agenceId: null
+      agenceIds: [],
+      agences: []
     };
     this.showAddModal = true;
   }
@@ -114,7 +124,9 @@ export class UserListComponent implements OnInit, OnDestroy {
       secteur: (user as any).secteur || '',
       contact: (user as any).contact || '',
       typeClient: (user as any).typeClient || 'ENTREPRISE',
-      agenceId: (user as any).agenceId || null
+      // Map existing agences if any (if backend sends array of agences)
+      agenceIds: (user as any).agences?.map((a: any) => a.code) || [],
+      agences: (user as any).agences?.map((a: any) => a.code) || [] // Keep this for Update payload
     };
     
     this.showAddModal = true;
@@ -142,6 +154,12 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   submitNewUser(): void {
+    // Sync the two properties depending on endpoint requirements:
+    // Update API uses "agences", Register API uses "agenceIds"
+    if (this.newUser.userType === 'CHEF_AGENCE' || this.newUser.userType === 'CHEFAGENCE') {
+        this.newUser.agences = this.newUser.agenceIds;
+    }
+    
     if (this.isEditMode && this.editingUserId) {
       // UPDATE EXISTING USER
       this.userService.updateUser(this.editingUserId, this.newUser).subscribe({

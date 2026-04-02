@@ -23,7 +23,7 @@ export class ViewExpeditionComponent implements OnInit {
   ngOnInit(): void {
     const idParam = this.route.snapshot.paramMap.get('id');
     if (idParam) {
-      this.expeditionService.getExpeditionById(Number(idParam)).subscribe({
+      this.expeditionService.getExpeditionById(idParam).subscribe({
         next: (data) => {
           this.expedition = data;
           this.loading = false;

@@ -1,5 +1,5 @@
 export interface Expedition {
-  numeroexpedition?: number;
+  numeroexpedition?: string;
   numerodeclaration?: number;
   dateCreation?: string;
   dateLivraison?: string;

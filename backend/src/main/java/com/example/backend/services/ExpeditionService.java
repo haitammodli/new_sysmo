@@ -93,13 +93,14 @@ public class ExpeditionService {
 
         // 3. Create and Save Expedition
         Expedition expedition = new Expedition();
-        expedition.setExpiditeur(expiditeur);
-        expedition.setDistinataire(destinataire);
+        expedition.setExpediteur(expiditeur);
+        expedition.setDestinataire(destinataire);
         expedition.setAgence(agence);
         expedition.setNature(nature);
         expedition.setType(type);
         expedition.setElementTaxation(savedTaxation);
         expedition.setDateCreation(LocalDateTime.now());
+        expedition.setNumeroExpedition(dto.getNumeroExpedition());
         expedition.setNumerodeclaration(dto.getNumerodeclaration());
         expedition.setRamasseur(ramasseur);
         expedition.setDateLivraison(dto.getDateLivraison());
@@ -116,7 +117,7 @@ public class ExpeditionService {
                 .collect(Collectors.toList());
     }
 
-    public ExpeditionResponseDTO getExpeditionById(Long id) {
+    public ExpeditionResponseDTO getExpeditionById(String id) {
         Expedition expedition = expeditionRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Expédition non trouvée avec ID: " + id));
         return mapToResponse(expedition);
@@ -124,19 +125,24 @@ public class ExpeditionService {
 
     private ExpeditionResponseDTO mapToResponse(Expedition expedition) {
         ExpeditionResponseDTO res = new ExpeditionResponseDTO();
-        res.setNumeroexpedition(expedition.getNumeroexpedition());
+        res.setNumeroexpedition(expedition.getNumeroExpedition());
         res.setDateCreation(expedition.getDateCreation());
         res.setStatut(expedition.getStatut().name());
         
-        if (expedition.getExpiditeur() != null) {
-            Long code = expedition.getExpiditeur().getCode();
+        if (expedition.getExpediteur() != null) {
+            Long code = expedition.getExpediteur().getCode();
             res.setExpiditeurId(code);
-            res.setExpiditeurNom(expedition.getExpiditeur().getNom());
+            res.setExpiditeurNom(expedition.getExpediteur().getNom());
         }
-        if (expedition.getDistinataire() != null) {
-            Long code = expedition.getDistinataire().getCode();
+        if (expedition.getDestinataire() != null) {
+            Long code = expedition.getDestinataire().getCode();
             res.setDistinataireId(code);
-            res.setDistinataireNom(expedition.getDistinataire().getNom());
+            res.setDistinataireNom(expedition.getDestinataire().getNom());
+        }
+        if (expedition.getRamasseur() != null) {
+            Long code = expedition.getRamasseur().getCode();
+            res.setRamasseurId(code);
+            res.setRamasseurNom(expedition.getRamasseur().getNom());
         }
         if (expedition.getAgence() != null) {
             Long code = expedition.getAgence().getCode();

@@ -1,8 +1,8 @@
 package com.example.backend.models.operations;
 
-import com.example.backend.enums.Statut;
+import com.example.backend.enums.StatutModificationAnn;
+import com.example.backend.enums.TypeModification;
 import com.example.backend.models.logistique.Expedition;
-import com.example.backend.models.systeme.ReferenceData;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,13 +21,12 @@ public class Modification {
     private Long id;
 
     //TARGET
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "numero_expedition", nullable = false)
-    private Expedition expedition;
+    @Column(name = "numero_expedition", nullable = false, length = 45)
+    private String numeroExpedition;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "type_modification_id", nullable = false)
-    private ReferenceData typeModification;
+    @Enumerated(EnumType.STRING)
+    @Column(length = 20, nullable = false)
+    private TypeModification typeModification ;
 
     //THE CHANGES
     @Column(length = 255)
@@ -65,5 +64,5 @@ public class Modification {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20, nullable = false)
-    private Statut statut = Statut.EN_ATTENTE;
+    private StatutModificationAnn statut = StatutModificationAnn.EN_ATTENTE;
 }

@@ -30,7 +30,7 @@ public class ExpeditionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ExpeditionResponseDTO> getExpeditionById(@PathVariable Long id) {
+    public ResponseEntity<ExpeditionResponseDTO> getExpeditionById(@PathVariable("id") String id) {
         ExpeditionResponseDTO response = expeditionService.getExpeditionById(id);
         return ResponseEntity.ok(response);
     }

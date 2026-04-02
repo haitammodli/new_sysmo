@@ -5,8 +5,8 @@
 <div *ngIf="!loading && expedition" class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
   <div class="mb-6 flex items-center justify-between">
     <div>
-      <h1 class="text-3xl font-bold text-gray-900 tracking-tight">Expédition #{{expedition.numeroexpedition}}</h1>
-      <p class="mt-1 text-sm text-gray-500">Créée le {{expedition.dateCreation | date:'long'}}</p>
+      <h1 class="text-3xl font-bold text-white-900 tracking-tight">Expédition #{{expedition.numeroexpedition}}</h1>
+      <p class="mt-1 text-sm text-white-500">Créée le {{expedition.dateCreation | date:'long'}}</p>
     </div>
     <div class="flex items-center space-x-4">
       <span class="inline-flex items-center rounded-md px-3 py-1 text-sm font-medium ring-1 ring-inset shadow-sm" [ngClass]="getBadgeClass(expedition.statut)">
@@ -38,10 +38,6 @@
             <dt class="font-medium text-gray-900">Ramasseur</dt>
             <dd class="text-gray-700 text-right">{{expedition.ramasseurNom}} <span class="text-xs text-gray-400">({{expedition.ramasseurId}})</span></dd>
           </div>
-          <div *ngIf="expedition.ramasseurId" class="py-3 flex justify-between gap-4">
-            <dt class="font-medium text-gray-900">Ramasseur</dt>
-            <dd class="text-gray-700 text-right">{{expedition.ramasseurNom}} <span class="text-xs text-gray-400">({{expedition.ramasseurId}})</span></dd>
-          </div>
         </dl>
       </div>
     </div>
@@ -64,16 +60,16 @@
     </div>
 
     <!-- Financials & Documents -->
-    <div class="bg-indigo-50 shadow-sm ring-1 ring-indigo-200 sm:rounded-xl">
+    <div class="bg-emerald-50 shadow-sm ring-1 ring-emerald-200 sm:rounded-xl">
       <div class="px-4 py-5 sm:p-6 text-black">
-        <h3 class="text-base font-semibold leading-6 text-indigo-900 border-b border-indigo-200 pb-2 mb-4">Financement et Facturation</h3>
-        <dl class="divide-y divide-indigo-100 text-sm">
-          <div class="py-2 flex justify-between gap-4"><dt class="text-indigo-800">Montant HT</dt><dd class="font-semibold">{{expedition.ht | number:'1.2-2'}}</dd></div>
-          <div class="py-2 flex justify-between gap-4"><dt class="text-indigo-800">TVA (%)</dt><dd class="font-semibold">{{expedition.tva}}</dd></div>
-          <div class="py-3 flex justify-between gap-4 bg-white rounded shadow-sm px-3 mt-2 border border-indigo-100"><dt class="font-bold text-gray-900">Total TTC</dt><dd class="font-black text-indigo-600 text-lg">{{expedition.ttc | number:'1.2-2'}} MAD</dd></div>
+        <h3 class="text-base font-semibold leading-6 text-emerald-900 border-b border-emerald-200 pb-2 mb-4">Financement et Facturation</h3>
+        <dl class="divide-y divide-emerald-100 text-sm">
+          <div class="py-2 flex justify-between gap-4"><dt class="text-emerald-800">Montant HT</dt><dd class="font-semibold">{{expedition.ht | number:'1.2-2'}}</dd></div>
+          <div class="py-2 flex justify-between gap-4"><dt class="text-emerald-800">TVA (%)</dt><dd class="font-semibold">{{expedition.tva}}</dd></div>
+          <div class="py-3 flex justify-between gap-4 bg-white rounded shadow-sm px-3 mt-2 border border-emerald-100"><dt class="font-bold text-gray-900">Total TTC</dt><dd class="font-black text-emerald-600 text-lg">{{expedition.ttc | number:'1.2-2'}} MAD</dd></div>
         </dl>
         <div class="mt-6">
-          <h4 class="text-sm font-semibold text-indigo-900 mb-2">Documents</h4>
+          <h4 class="text-sm font-semibold text-emerald-900 mb-2">Documents</h4>
           <div class="flex flex-col space-y-2">
             <div class="flex items-center text-sm">
               <span class="w-4 h-4 rounded-full mr-2 flex items-center justify-center" [ngClass]="expedition.bl ? 'bg-green-100 text-green-600' : 'bg-gray-100 text-gray-400'">
@@ -99,15 +95,15 @@
       <div class="px-4 py-5 sm:p-6 border-b border-gray-100">
         <h3 class="text-base font-semibold leading-6 text-gray-900 border-b pb-2 mb-4">Détails de Taxation</h3>
         <dl class="grid grid-cols-2 gap-x-8 gap-y-4 sm:grid-cols-4 lg:grid-cols-6 text-sm text-center">
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Colis</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.colis || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Poids (kg)</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.poid || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Volume (m³)</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.volume || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Étiquettes</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.etiquette || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Encombrement</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.encombrement || 0}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Valeur Déclarée</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.valeurDeclaree | number:'1.2-2'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Fond</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.fond | number:'1.2-2'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">PS</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.ps | number:'1.2-2'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
-          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group col-span-2 sm:col-span-4 lg:col-span-4 text-left"><dt class="font-medium text-gray-500 text-center sm:text-left">Commentaire</dt><dd class="mt-1 text-base text-gray-900">{{expedition.comment || 'Aucun commentaire'}}</dd><div class="absolute w-1 bg-indigo-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Colis</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.colis || 0}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Poids (kg)</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.poid || 0}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Volume (m³)</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.volume || 0}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Étiquettes</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.etiquette || 0}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Encombrement</dt><dd class="mt-1 text-2xl font-bold tracking-tight text-gray-900">{{expedition.encombrement || 0}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Valeur Déclarée</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.valeurDeclaree | number:'1.2-2'}}</dd><div class="absolute w-1 bg-emerald-500 top=0 bottom=0 left=0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">Fond</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.fond | number:'1.2-2'}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group"><dt class="font-medium text-gray-500">PS</dt><dd class="mt-1 text-xl font-bold tracking-tight text-gray-900">{{expedition.ps | number:'1.2-2'}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
+          <div class="bg-gray-50 px-4 py-4 rounded relative overflow-hidden group col-span-2 sm:col-span-4 lg:col-span-4 text-left"><dt class="font-medium text-gray-500 text-center sm:text-left">Commentaire</dt><dd class="mt-1 text-base text-gray-900">{{expedition.comment || 'Aucun commentaire'}}</dd><div class="absolute w-1 bg-emerald-500 top-0 bottom-0 left-0 hidden group-hover:block"></div></div>
         </dl>
       </div>
     </div>

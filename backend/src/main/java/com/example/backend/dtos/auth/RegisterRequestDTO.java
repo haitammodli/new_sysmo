@@ -1,9 +1,11 @@
 package com.example.backend.dtos.auth;
 
 import lombok.Data;
+import java.util.List;
 
 @Data
 public class RegisterRequestDTO {
+    private Long code;
     private String email;
     private String password;
     private String nom;
@@ -19,5 +21,5 @@ public class RegisterRequestDTO {
     private String typeClient;
 
     // Optional fields for ChefAgence
-    private Long agenceId;
+    private List<Long> agenceIds;
 }

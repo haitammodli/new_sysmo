@@ -38,8 +38,6 @@ export class UserService {
   }
 
   createUser(userData: any): Observable<any> {
-    // We use responseType: 'text' because your Spring Boot AuthController
-    // returns a plain String ("User registered successfully!") instead of JSON.
     return this.http.post(`${this.authUrl}/register`, userData, { responseType: 'text' });
   }
 

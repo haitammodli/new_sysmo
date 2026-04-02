@@ -15,7 +15,7 @@ export class ExpeditionService {
     return this.http.get<Expedition[]>(this.apiUrl);
   }
 
-  getExpeditionById(id: number): Observable<Expedition> {
+  getExpeditionById(id: string): Observable<Expedition> {
     return this.http.get<Expedition>(`${this.apiUrl}/${id}`);
   }
 
