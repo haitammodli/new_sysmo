@@ -25,7 +25,7 @@ public class Modification {
     private String numeroExpedition;
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, nullable = false)
+    @Column(name = "type_modification", length = 20, nullable = false)
     private TypeModification typeModification ;
 
     //THE CHANGES
