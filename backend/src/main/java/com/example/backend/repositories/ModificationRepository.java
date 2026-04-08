@@ -12,6 +12,8 @@ import java.util.List;
 public interface ModificationRepository extends JpaRepository<Modification, Long> {
     List<Modification> findByNumeroExpedition(String numeroExpedition);
 
+    List<Modification> findByNumeroExpeditionIn(List<String> numerosExpedition);
+
     long countByNumeroExpedition(String numeroExpedition);
 
     List<Modification> findByStatut(StatutModificationAnn statut);

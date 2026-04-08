@@ -10,7 +10,8 @@ import { ReferenceManagementComponent } from './features/reference-data/referenc
 import { DashboardOverviewComponent } from './features/dashboard/dashboard-overview/dashboard-overview.component';
 import { AgenceListComponent } from './features/agences/agence-list/agence-list.component';
 import { AdminPanelComponent } from './features/admin-panel/admin-panel.component';
-
+import { DemandeModificationComponent } from './features/modifications/demande-modification/demande-modification.component';
+import { ModificationComponent } from './features/modifications/modifications/modification.component';
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   {
@@ -23,7 +24,8 @@ export const routes: Routes = [
       { path: 'expeditions', component: ExpeditionsListComponent },
       { path: 'expeditions/add', component: AddExpeditionComponent },
       { path: 'expeditions/:id', component: ViewExpeditionComponent },
-
+      { path: 'demande-modification', component: DemandeModificationComponent },
+      { path: 'modifications', component: ModificationComponent },
       // Admin Panel — unified wrapper for the four core sections
       {
         path: 'admin',

@@ -66,6 +66,7 @@ export class AddExpeditionComponent implements OnInit {
       numeroExpedition: ['', Validators.required],
       numerodeclaration: [null],
       dateLivraison: [null],
+      adresseLivraison: ['', Validators.required],
       agenceId: [null, Validators.required],
 
       // Relationships (Hidden IDs)

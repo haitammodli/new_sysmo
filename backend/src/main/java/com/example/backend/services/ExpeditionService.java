@@ -104,6 +104,7 @@ public class ExpeditionService {
         expedition.setNumerodeclaration(dto.getNumerodeclaration());
         expedition.setRamasseur(ramasseur);
         expedition.setDateLivraison(dto.getDateLivraison());
+        expedition.setAdresseLivraison(dto.getAdresseLivraison());
         expedition.setStatut(StatutExpedition.EN_COURS);
 
         Expedition savedExpedition = expeditionRepository.save(expedition);
@@ -127,6 +128,7 @@ public class ExpeditionService {
         ExpeditionResponseDTO res = new ExpeditionResponseDTO();
         res.setNumeroexpedition(expedition.getNumeroExpedition());
         res.setDateCreation(expedition.getDateCreation());
+        res.setAdresseLivraison(expedition.getAdresseLivraison());
         res.setStatut(expedition.getStatut().name());
         
         if (expedition.getExpediteur() != null) {

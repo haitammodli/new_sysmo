@@ -27,7 +27,7 @@ public class Expedition {
 
     private LocalDateTime dateCreation;
     private LocalDateTime dateLivraison;
-
+    private String adresseLivraison;
     @JoinColumn(name = "nature_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private ReferenceData nature;
@@ -49,7 +49,7 @@ public class Expedition {
     private Agence agence;
 
     @JoinColumn(name = "element_taxation_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private ElementTaxation elementTaxation;
 
     @Enumerated(EnumType.STRING)

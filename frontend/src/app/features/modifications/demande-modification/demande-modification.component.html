@@ -1,0 +1,122 @@
+<div class="max-w-5xl mx-auto mt-8 px-4">
+  <div class="bg-white rounded-lg shadow-md border border-gray-200">
+    
+    <div class="bg-blue-600 text-white px-6 py-4 rounded-t-lg">
+      <h4 class="text-xl font-semibold m-0">Soumettre une Demande de Modification Sysmo</h4>
+    </div>
+    
+    <div class="p-6">
+      <div *ngIf="successMessage" class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-6 rounded font-bold">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6 rounded font-bold">
+        {{ errorMessage }}
+      </div>
+
+      <form [formGroup]="modifForm" (ngSubmit)="onSubmit()">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+          
+          <div>
+            <label class="block text-gray-700 font-bold mb-2">
+              Numéro d'expédition <span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="numeroExpedition" placeholder="Ex: s123456"
+                   class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent transition-colors"
+                   [ngClass]="modifForm.get('numeroExpedition')?.invalid && modifForm.get('numeroExpedition')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'">
+            <div *ngIf="modifForm.get('numeroExpedition')?.invalid && modifForm.get('numeroExpedition')?.touched" class="text-red-500 text-sm mt-1 font-medium">
+              Le numéro d'expédition est requis.
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-bold mb-2">
+              Type de modification <span class="text-red-500">*</span>
+            </label>
+            <select formControlName="typeModification" 
+                    class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent transition-colors bg-white"
+                    [ngClass]="modifForm.get('typeModification')?.invalid && modifForm.get('typeModification')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'">
+              <option value="" disabled selected>Sélectionnez le type d'erreur...</option>
+              <option *ngFor="let type of typesModification" [value]="type">{{ type }}</option>
+            </select>
+            <div *ngIf="modifForm.get('typeModification')?.invalid && modifForm.get('typeModification')?.touched" class="text-red-500 text-sm mt-1 font-medium">
+              Veuillez sélectionner un type.
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-bold mb-2">
+              Ancienne Valeur <span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="ancienneValeur" placeholder="Valeur actuelle"
+                   class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent transition-colors"
+                   [ngClass]="modifForm.get('ancienneValeur')?.invalid && modifForm.get('ancienneValeur')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'">
+            <div *ngIf="modifForm.get('ancienneValeur')?.invalid && modifForm.get('ancienneValeur')?.touched" class="text-red-500 text-sm mt-1 font-medium">
+              L'ancienne valeur est requise.
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-gray-700 font-bold mb-2">
+              Nouvelle Valeur <span class="text-red-500">*</span>
+            </label>
+            <input type="text" formControlName="nouvelleValeur" placeholder="Valeur souhaitée"
+                   class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent transition-colors"
+                   [ngClass]="modifForm.get('nouvelleValeur')?.invalid && modifForm.get('nouvelleValeur')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'">
+            <div *ngIf="modifForm.get('nouvelleValeur')?.invalid && modifForm.get('nouvelleValeur')?.touched" class="text-red-500 text-sm mt-1 font-medium">
+              La nouvelle valeur est requise.
+            </div>
+          </div>
+        </div>
+
+        <div class="border-t border-gray-200 pt-6 mt-2 mb-6">
+          <h5 class="text-gray-500 font-semibold mb-4">Informations du demandeur</h5>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-gray-700 font-bold mb-2">
+                ID Demandeur <span class="text-red-500">*</span>
+              </label>
+              <input type="number" formControlName="demandeurId" placeholder="Votre matricule / ID"
+                     class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent transition-colors"
+                     [ngClass]="modifForm.get('demandeurId')?.invalid && modifForm.get('demandeurId')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'">
+              <div *ngIf="modifForm.get('demandeurId')?.invalid && modifForm.get('demandeurId')?.touched" class="text-red-500 text-sm mt-1 font-medium">
+                Un ID valide est requis.
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-gray-700 font-bold mb-2">
+                Votre Rôle <span class="text-red-500">*</span>
+              </label>
+              <select formControlName="roleDemandeur" 
+                      class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:border-transparent transition-colors bg-white"
+                      [ngClass]="modifForm.get('roleDemandeur')?.invalid && modifForm.get('roleDemandeur')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-blue-500'">
+                <option value="" disabled selected>Sélectionnez votre rôle...</option>
+                <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+              </select>
+              <div *ngIf="modifForm.get('roleDemandeur')?.invalid && modifForm.get('roleDemandeur')?.touched" class="text-red-500 text-sm mt-1 font-medium">
+                Votre rôle est requis pour l'audit.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex justify-end mt-8">
+          <button type="submit" 
+                  [disabled]="modifForm.invalid || isSubmitting"
+                  class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-md shadow-md transition-colors flex items-center disabled:opacity-50 disabled:cursor-not-allowed">
+            
+            <svg *ngIf="isSubmitting" class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+            
+            {{ isSubmitting ? 'Traitement en cours...' : 'Soumettre la demande' }}
+          </button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</div>

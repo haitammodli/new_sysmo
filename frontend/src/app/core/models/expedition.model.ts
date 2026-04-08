@@ -3,6 +3,7 @@ export interface Expedition {
   numerodeclaration?: number;
   dateCreation?: string;
   dateLivraison?: string;
+  adresseLivraison?: string;
   statut?: string;
   
   expiditeurId?: number;

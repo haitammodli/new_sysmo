@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/modifications")
 public class ModificationController {
@@ -29,5 +31,21 @@ public class ModificationController {
             
         ModificationResponseDTO response = modificationService.traiterDemande(id, nouveauStatut, agentId);
         return ResponseEntity.ok(response);
+    }
+    @GetMapping
+    public ResponseEntity<List<ModificationResponseDTO>> getAll() {
+        return ResponseEntity.ok(modificationService.getAllModifications());
+    }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id) {
+        try {
+            return ResponseEntity.ok(modificationService.getModificationById(id));
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<ModificationResponseDTO>> search(@RequestParam String critere) {
+        return ResponseEntity.ok(modificationService.rechercherMultiple(critere));
     }
 }

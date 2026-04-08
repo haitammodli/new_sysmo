@@ -10,6 +10,7 @@ public class ExpeditionResponseDTO {
     private Long numerodeclaration;
     private LocalDateTime dateCreation;
     private LocalDateTime dateLivraison;
+    private String adresseLivraison;
     private String statut;
     
     // Core Relationships & Participants (Names for the UI)

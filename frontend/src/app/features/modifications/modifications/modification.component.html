@@ -1,0 +1,139 @@
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+  
+  <div class="mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between">
+    <h1 class="text-3xl font-bold text-slate-800 tracking-tight">Gestion des Modifications</h1>
+    
+    <div class="mt-4 sm:mt-0 flex space-x-3">
+      <button 
+        (click)="activeTab = 'LIST'" 
+        [class]="activeTab === 'LIST' ? 'bg-slate-800 text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'"
+        class="px-5 py-2 rounded-lg text-sm font-bold transition-all">
+        Historique & Traitement
+      </button>
+      <button 
+        (click)="activeTab = 'NEW'" 
+        [class]="activeTab === 'NEW' ? 'bg-primary text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-50 border border-slate-200'"
+        class="px-5 py-2 rounded-lg text-sm font-bold transition-all flex items-center">
+        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+        Nouvelle Demande
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'LIST'" class="space-y-6">
+    
+    <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200 flex flex-col md:flex-row gap-4 items-center justify-between">
+      <div class="relative w-full md:w-2/3">
+        <svg class="absolute left-3 top-3 h-5 w-5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <input 
+          type="text" 
+          [(ngModel)]="searchCritere" 
+          (keyup.enter)="onSearch()"
+          placeholder="Rechercher par N° Expédition ou N° Déclaration..." 
+          class="block w-full pl-10 pr-3 py-2.5 border-slate-300 rounded-lg focus:ring-primary focus:border-primary sm:text-sm font-medium">
+      </div>
+      <div class="flex gap-3 w-full md:w-auto">
+        <button (click)="onSearch()" class="w-full md:w-auto bg-slate-800 hover:bg-slate-900 text-white font-bold py-2.5 px-6 rounded-lg transition-colors shadow-sm">Rechercher</button>
+        <button (click)="resetSearch()" class="w-full md:w-auto bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-4 rounded-lg transition-colors border border-slate-300">Reset</button>
+      </div>
+    </div>
+
+    <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-slate-200">
+          <thead class="bg-slate-50">
+            <tr>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">N° Expédition</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Type Modification</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Détails (Ancienne ➔ Nouvelle)</th>
+              <th scope="col" class="px-6 py-4 text-left text-xs font-bold text-slate-500 uppercase tracking-wider">Statut</th>
+              <th scope="col" class="px-6 py-4 text-right text-xs font-bold text-slate-500 uppercase tracking-wider">Actions</th>
+            </tr>
+          </thead>
+          <tbody class="bg-white divide-y divide-slate-100">
+            
+            <tr *ngIf="modifications.length === 0">
+              <td colspan="5" class="px-6 py-8 text-center text-slate-500 font-medium">Aucune modification trouvée.</td>
+            </tr>
+
+            <tr *ngFor="let mod of modifications" class="hover:bg-slate-50 transition-colors">
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-slate-900">{{mod.numeroExpedition}}</td>
+              <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-600">{{mod.typeModification}}</td>
+              <td class="px-6 py-4 text-sm text-slate-600">
+                <span class="line-through text-slate-400 mr-2">{{mod.ancienneValeur || 'N/A'}}</span>
+                <span class="text-primary font-bold">➔ {{mod.nouvelleValeur}}</span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap">
+                <span [class]="getBadgeClass(mod.statut)" class="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full border">
+                  {{mod.statut}}
+                </span>
+              </td>
+              <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                <div *ngIf="mod.statut === 'EN_ATTENTE'" class="flex justify-end space-x-2">
+                  <button (click)="traiter(mod.id, 'APPROUVEE')" class="text-white bg-green-500 hover:bg-green-600 px-3 py-1.5 rounded-md shadow-sm transition-colors text-xs font-bold">
+                    Approuver
+                  </button>
+                  <button (click)="traiter(mod.id, 'REJETEE')" class="text-white bg-red-500 hover:bg-red-600 px-3 py-1.5 rounded-md shadow-sm transition-colors text-xs font-bold">
+                    Rejeter
+                  </button>
+                </div>
+                <span *ngIf="mod.statut !== 'EN_ATTENTE'" class="text-slate-400 text-xs font-semibold">
+                  Traitée le {{mod.dateTraitement | date:'dd/MM/yyyy'}}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="activeTab === 'NEW'" class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+    
+    <div class="px-6 py-6 border-b border-slate-200 bg-slate-50">
+      <h2 class="text-lg font-bold text-slate-800">Formulaire de Demande de Modification</h2>
+      <p class="text-sm text-slate-500 mt-1">Rappel : Un maximum de deux modifications par expédition est autorisé. Les expéditions facturées ne peuvent pas être modifiées.</p>
+    </div>
+
+    <form [formGroup]="modForm" (ngSubmit)="onSubmit()" class="p-6 sm:p-8 space-y-6">
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-semibold leading-6 text-slate-700">N° d'Expédition cible *</label>
+          <input type="text" formControlName="numeroExpedition" class="mt-2 block w-full rounded-lg border-slate-300 py-2.5 px-3 text-slate-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm font-bold uppercase" placeholder="EX: EXP-2026-0001">
+          <p *ngIf="modForm.get('numeroExpedition')?.invalid && modForm.get('numeroExpedition')?.touched" class="mt-1 text-xs text-red-500">Requis.</p>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold leading-6 text-slate-700">Type de Modification *</label>
+          <select formControlName="typeModification" class="mt-2 block w-full rounded-lg border-slate-300 py-2.5 px-3 text-slate-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm">
+            <option value="">Sélectionnez le motif...</option>
+            <option *ngFor="let type of typesModification" [value]="type">{{type}}</option>
+          </select>
+          <p *ngIf="modForm.get('typeModification')?.invalid && modForm.get('typeModification')?.touched" class="mt-1 text-xs text-red-500">Requis.</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label class="block text-sm font-semibold leading-6 text-slate-700">Ancienne Valeur</label>
+          <input type="text" formControlName="ancienneValeur" class="mt-2 block w-full rounded-lg border-slate-300 py-2.5 px-3 text-slate-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm" placeholder="Valeur actuelle...">
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold leading-6 text-slate-700">Nouvelle Valeur souhaitée *</label>
+          <input type="text" formControlName="nouvelleValeur" class="mt-2 block w-full rounded-lg border-slate-300 py-2.5 px-3 text-slate-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm font-bold text-primary" placeholder="Nouvelle valeur / Correction...">
+          <p *ngIf="modForm.get('nouvelleValeur')?.invalid && modForm.get('nouvelleValeur')?.touched" class="mt-1 text-xs text-red-500">Requis.</p>
+        </div>
+      </div>
+
+      <div class="flex justify-end pt-6 border-t border-slate-100">
+        <button type="button" (click)="activeTab = 'LIST'" class="mr-4 text-sm font-semibold leading-6 text-slate-500 hover:text-slate-800 transition-colors">Annuler</button>
+        <button type="submit" [disabled]="modForm.invalid" class="rounded-xl bg-primary px-8 py-3 text-sm font-bold text-white shadow-md hover:bg-green-600 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-all">
+          Soumettre la Demande
+        </button>
+      </div>
+    </form>
+  </div>
+
+</div>

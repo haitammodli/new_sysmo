@@ -11,6 +11,7 @@ public class ExpeditionRequestDTO {
     private Long numerodeclaration;
     private Long ramasseurId;
     private LocalDateTime dateLivraison;
+    private String adresseLivraison;
 
     // Relationships
     private Long expiditeurId;

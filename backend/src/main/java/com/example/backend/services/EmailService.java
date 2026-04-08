@@ -43,7 +43,7 @@ public class EmailService {
 
         mailSender.send(message);
     }
-   // @Async // Essential to keep the app fast
+   @Async // Essential to keep the app fast
     public void notifierAgentIndividuel(String emailDestinataire, String numeroExpedition, String typeModif) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();

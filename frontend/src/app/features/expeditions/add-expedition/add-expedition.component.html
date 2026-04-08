@@ -14,7 +14,7 @@
         </h2>
         <div class="grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-4 items-start">
           <div>
-            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">N° d'Expédition *</label>
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">N° d'Expédition </label>
             <div class="mt-2 text-black">
               <input type="text" formControlName="numeroExpedition" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm font-bold tracking-wider uppercase transition-all" placeholder="EX: EXP-2026-0001">
             </div>
@@ -29,7 +29,7 @@
           </div>
 
           <div class="relative">
-            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Agence *</label>
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Agence </label>
             <div class="mt-2 text-black relative flex items-center">
               <svg class="absolute left-3 top-2.5 h-4 w-4 text-slate-400 z-10 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
               <input type="text" formControlName="agenceSearch" (input)="onSearch('agence', $event)" (focus)="showAgenceDropdown = agenceResults.length > 0" class="block w-full rounded-lg border-0 py-2.5 pl-9 pr-12 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 placeholder:text-slate-400 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm font-bold transition-all" placeholder="Rechercher agence (Nom ou Ville)">
@@ -55,6 +55,13 @@
             <div class="mt-2 text-black">
               <input type="datetime-local" formControlName="dateLivraison" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all focus:bg-white text-slate-600 appearance-none">
             </div>
+          </div>
+          <div class="sm:col-span-2 lg:col-span-4 mt-2">
+            <label class="block text-sm font-semibold leading-6 text-slate-700 dark:text-slate-300">Adresse de Livraison </label>
+            <div class="mt-2 text-black">
+              <textarea formControlName="adresseLivraison" rows="2" class="block w-full rounded-lg border-0 py-2.5 px-3 text-slate-900 shadow-sm ring-1 ring-inset ring-slate-300 focus:ring-2 focus:ring-inset focus:ring-primary sm:text-sm transition-all" placeholder="Ex:Casablanca..."></textarea>
+            </div>
+            <p *ngIf="addForm.get('adresseLivraison')?.invalid && addForm.get('adresseLivraison')?.touched" class="mt-2 text-xs font-medium text-red-500">L'adresse de livraison est requise.</p>
           </div>
         </div>
       </div>
